@@ -6,10 +6,4 @@ const client = createClient({
   authToken: process.env.FK_DB_TOKEN
 });
 
-console.log(process.env)
-
-if (process.env.DATABASE_CONNECTION_TYPE === "local-replica") {
-  await client.sync();
-}
-
 export default client

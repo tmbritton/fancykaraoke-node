@@ -9,20 +9,20 @@ export type Song = {
   created_at: string
 }
 
-export const getSongById = async (id: string | number): undefined | Song => {
+export const querySongById = async (id: string | number): Promise<Song | undefined> => {
   try {
     const result = await client.execute({
       sql: "select * from songs where id = :id",
-      args: {id}
+      args: { id }
     });
-    if (result.rows[0]) return result.rows[0]
-  }
-  catch (e) {
+    return result.rows[0] as unknown as Song | undefined;
+  } catch (e) {
     console.error(e);
+    return undefined;
   }
-}
+};
 
-export const searchSongs = async (searchTerm: string, limit = 10): undefined | Song[] => {
+export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[] | undefined> => {
   try {
     // Split the search string into keywords
     const keywords = searchTerm.split(/\s+/).map(keyword => `%${keyword.trim()}%`);
@@ -32,7 +32,7 @@ export const searchSongs = async (searchTerm: string, limit = 10): undefined | S
       args: { searchTerm: `%${searchTerm}%`, limit }
     });
 
-    return result.rows;
+    return result.rows as unknown as Song[] | undefined;;
   } catch (e) {
     console.error(e);
   }
