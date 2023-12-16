@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
+import FKButton from '../components/FKButton';
 ---
 
 <Layout title="Create a party | Fancy Karaoke">
@@ -10,7 +10,7 @@ import Layout from '../layouts/Layout.astro';
     <form class="flex flex-col justify-start">
       <label for="party-name">Party Name</label>
       <input type="text" name="party-name" placeholder="Enter party name" id="party-name" />
-      <button type="submit">Start Party!</button>
+      <FKButton type="submit">Start party!</FKButton>
     </form>
 	</main>
 </Layout>

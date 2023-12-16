@@ -4,6 +4,7 @@ interface Props {
 }
 
 const { title } = Astro.props;
+import '../styles/global.css';
 ---
 
 <!doctype html>
@@ -17,11 +18,27 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body class="bg-slate-700">
-		<header class="bg-pink-400 h-16 flex items-center px-8 mb-8">
-			<h1 class="text-slate-800 font-bold text-xl">Fancy Karaoke</h1>
+		<header>
+			<h1><a href="/">Fancy Karaoke</a></h1>
 		</header>
-		<slot />
+		<main>
+			<slot />
+		</main>
+		<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
 	</body>
 </html>
-<style is:global>
+
+<style>
+	body {
+		background-color: var(--white);
+	}
+	header {
+		background-color: var(--primary);
+		border-bottom: 1px solid var(--magenta04);
+		color: var(----grey);
+		padding: .5rem 2rem;
+	}
+	main {
+		padding: 1.5rem 2rem;
+	}
 </style>

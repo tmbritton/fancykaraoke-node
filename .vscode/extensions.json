@@ -1,4 +1,8 @@
 {
-  "recommendations": ["astro-build.astro-vscode"],
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "runem.lit-plugin",
+    "styled-components.vscode-styled-components"
+  ],
   "unwantedRecommendations": []
 }
