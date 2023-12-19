@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": ["src/**/*.ts", "src/env.d.ts", "shims-vue.d.ts"],
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "target": "es2021",
     "module": "es2015",

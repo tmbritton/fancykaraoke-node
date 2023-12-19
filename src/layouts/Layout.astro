@@ -4,6 +4,7 @@ interface Props {
 }
 
 const { title } = Astro.props;
+import defineButton from '../components/button'
 import '../styles/global.css';
 ---
 
@@ -24,6 +25,10 @@ import '../styles/global.css';
 		<main>
 			<slot />
 		</main>
+		<script>
+			import defineButton from '../components/button';
+			defineButton()
+		</script>
 		<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
 	</body>
 </html>
