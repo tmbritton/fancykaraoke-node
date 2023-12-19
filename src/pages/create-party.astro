@@ -1,15 +1,57 @@
 ---
 import Layout from '../layouts/Layout.astro';
+let error: Error;
+
+if (Astro.request.method === "POST") {
+  debugger;
+  try {
+    const data = await Astro.request.formData();
+    const partyName = data.get("party-name");
+    console.log(partyName)
+    // Do something with the data
+
+
+
+
+
+    //return Astro.redirect("/login");
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+      error = err;
+    }
+  }
+}
 ---
 
 <Layout title="Create a party | Fancy Karaoke">
-	<main class="px-8">
-		<h2 class="text-slate-200">Create Party</h1>
+	<div class="create-party-page">
+		<h2>Create Party</h1>
 
-    <form class="flex flex-col justify-start">
-      <label for="party-name">Party Name</label>
-      <input type="text" name="party-name" placeholder="Enter party name" id="party-name" />
-      <fk-button class="button" type="submit" foo="bar">This is a button</fk-button>
-    </form>
-	</main>
+    <section class="card">
+      <form method="post" action="/create-party">
+        <label for="party-name">Party Name</label>
+        <input type="text" name="party-name" placeholder="Enter party name" id="party-name" required minlength="2" />
+
+        <div style="display: none;">
+          <label for="shazbot">Enter your email address</label>
+          <input type="text" name="shazbot" id="shazbot" />
+        </div>
+        <br />
+        <button
+          class="button"
+          type="submit"
+        >
+          Create party!
+        </button>
+      </form>
+    </section>
+	</div>
 </Layout>
+
+<style>
+  .create-party-page {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+</style>

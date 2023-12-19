@@ -1,0 +1,47 @@
+:root {
+  --magenta: #b81365;
+  --pink: #f28da9;
+  --white: #f7f8f7;
+  --bruise: #a4849e;
+  --grey: #2f3233;
+
+  /* Color Shades */
+  --magenta01: #fad1e5;
+  --magenta02: #f174b2; 
+  --magenta03: #e7187f;
+  --magenta04: #8b0e4c;
+  --magenta05: #2e0519;
+  --pink01: #fad1dc;
+  --pink02: #ef7697;
+  --pink03: #e51a52;
+  --pink04: #891031;
+  --pink05: #2e0510;
+  --bruise01: #e9e2e8;
+  --bruise02: #bea7ba;
+  --bruise03: #936c8b;
+  --bruise04: #584154;
+  --bruise05: #1d161c;
+  --grey01: #e4e6e7;
+  --grey02: #afb4b6;
+  --grey03: #7a8285;
+  --grey04: #494e50;
+  --grey05: #181a1b;
+
+  --primary: var(--magenta);
+  --secondary: var(--bruise);
+  --accent: var(--pink);
+  --dark: var(--grey);
+  --border: var(--grey02);
+
+  /* Font Families */
+  --font-heading: "Arial Black", "Arial Bold", sans-serif;
+  --font-body: "Gill Sans", Helvetica, Arial, sans-serif;
+  --font-subtitle: "Arial Narrow", Arial, sans-serif;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 500;
+  --font-weight-bold: 700;
+
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

@@ -4,7 +4,6 @@ interface Props {
 }
 
 const { title } = Astro.props;
-import defineButton from '../components/button'
 import '../styles/global.css';
 ---
 
@@ -18,7 +17,7 @@ import '../styles/global.css';
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="bg-slate-700">
+	<body hx-boost>
 		<header>
 			<h1><a href="/">Fancy Karaoke</a></h1>
 		</header>
@@ -34,9 +33,6 @@ import '../styles/global.css';
 </html>
 
 <style>
-	body {
-		background-color: var(--white);
-	}
 	header {
 		background-color: var(--primary);
 		border-bottom: 1px solid var(--magenta04);

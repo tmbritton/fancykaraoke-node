@@ -1,0 +1,26 @@
+button {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-bold);
+  font-size: .85rem;
+  color: var(--primary);
+  border: 3px solid var(--primary);
+  padding: .25rem .5rem;
+  background: transparent;
+  transition: color .1s ease-in-out, border-color .1s ease-in-out;
+  margin: 1rem 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: var(--magenta02);
+    border-color: var(--magenta02);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--grey03);
+    border-color: var(--grey03);
+    background-color: var(--grey01);
+  }
+}

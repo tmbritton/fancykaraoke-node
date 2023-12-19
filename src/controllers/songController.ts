@@ -1,4 +1,4 @@
-import {querySongById, querySongs, type Song} from '../db/songModel'
+import {querySongById, querySongs, type Song} from '../models/songModel'
 
 export const getSongById = async (id: number): Song | undefined => {
   const result = await querySongById(id);

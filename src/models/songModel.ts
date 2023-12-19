@@ -1,4 +1,4 @@
-import client from './client'
+import client from '../db/client';
 
 export type Song = {
   id: number,

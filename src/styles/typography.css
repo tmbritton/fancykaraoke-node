@@ -1,0 +1,40 @@
+h1 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  color: var(--white);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+p, span {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: var(--font-weight-normal);
+  color: var(--white);
+}
+
+label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--bruise05);
+  font-size: 1rem;
+  margin-bottom: .5rem;
+}
+
+a, a:link, a:visited, a:focus, a:hover, a:active{
+  color: var(--white);
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 1px solid var(--white);
+}
+
