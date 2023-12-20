@@ -8,8 +8,12 @@ export type Party = {
   last_played: string,
 }
 
-export const createParty = (name: string) => {
-  //const slug = 
-  const sanitizedName = name.replace(/[^a-z0-9]+/gi,'');
-  const slug = name.replace(/[^a-z0-9]+/gi,'-').toLowerCase() + '-' + Date.now();
+export const selectSlugCount = async (slug: string) => {
+  const result = await client.execute(`SELECT COUNT(*) FROM parties WHERE slug LIKE "${slug}"`);
+  return result?.rows?.[0]?.['COUNT(*)'];
+}
+
+export const insertParty = async (name: string, slug: string) => {
+  const result = await client.execute(`INSERT INTO parties (name, slug) VALUES ('${name}', '${slug}')`);
+  return result;
 }

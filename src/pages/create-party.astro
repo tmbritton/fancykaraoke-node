@@ -1,17 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { createParty } from '../controllers/partyController';
 let error: Error;
 
 if (Astro.request.method === "POST") {
-  debugger;
   try {
     const data = await Astro.request.formData();
     const partyName = data.get("party-name");
-    console.log(partyName)
     // Do something with the data
+    const result =  await createParty(partyName as string);
 
-
-
+    if (result?.created) {
+      return Astro.redirect(`/host/${result?.slug}`)
+    }
 
 
     //return Astro.redirect("/login");
