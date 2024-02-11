@@ -1,9 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getPartyBySlug } from '../../controllers/partyController';
+
 const { slug } = Astro.params;
+const party = await getPartyBySlug(slug as string)
+
 
 ---
 
-<Layout title="Slug Page">
-  {slug}
+<Layout title={`${party?.name} | Hosting | Fancy Karaoke`}>
+  {party?.name}
 </Layout>

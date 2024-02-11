@@ -15,5 +15,11 @@ export const selectSlugCount = async (slug: string) => {
 
 export const insertParty = async (name: string, slug: string) => {
   const result = await client.execute(`INSERT INTO parties (name, slug) VALUES ('${name}', '${slug}')`);
+  await client.sync()
   return result;
+}
+
+export const selectPartyBySlug = async(slug: string) => {
+  const result = await client.execute(`SELECT * FROM parties WHERE slug="${slug}"`)
+  return result
 }

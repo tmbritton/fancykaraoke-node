@@ -6,6 +6,10 @@ let error: Error;
 if (Astro.request.method === "POST") {
   try {
     const data = await Astro.request.formData();
+    const honeypot = data.get('email-shazbot');
+    if (honeypot) {
+      throw new Error(`Honeypot | ${honeypot}`)
+    }
     const partyName = data.get("party-name");
     // Do something with the data
     const result =  await createParty(partyName as string);
@@ -14,8 +18,6 @@ if (Astro.request.method === "POST") {
       return Astro.redirect(`/host/${result?.slug}`)
     }
 
-
-    //return Astro.redirect("/login");
   } catch (err) {
     if (err instanceof Error) {
       console.error(err.message);
@@ -34,9 +36,9 @@ if (Astro.request.method === "POST") {
         <label for="party-name">Party Name</label>
         <input type="text" name="party-name" placeholder="Enter party name" id="party-name" required minlength="2" />
 
-        <div style="display: none;">
+        <div style={{display: 'none'}}>
           <label for="shazbot">Enter your email address</label>
-          <input type="text" name="shazbot" id="shazbot" />
+          <input type="text" name="email-shazbot" id="email-shazbot" />
         </div>
         <br />
         <button

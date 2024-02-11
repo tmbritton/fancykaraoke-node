@@ -1,16 +1,16 @@
-import { type Party, selectSlugCount, insertParty } from "../models/partyModel";
+import { type Party, selectSlugCount, insertParty, selectPartyBySlug } from "../models/partyModel";
+
+const sanitizeString = (str: string) => str.trim().replace(/[^a-zA-Z 0-9-]+/gi,'');
 
 export const createParty = async (name: string) => {
   // Strip dangerous characters.
-  const sanitizedName = name.trim().replace(/[^a-zA-Z 0-9]+/gi,'');
+  const sanitizedName = sanitizeString(name);
   // Create sluggified version.
   const sluggified = sanitizedName.toLowerCase().replace(/[^a-z0-9]+/gi,'-');
   let slug = sluggified
 
   const count = await selectSlugCount(sluggified);
-  //const slug = typeof count === 'number' && count === 0 ? sluggified : `${sluggified}-${count as number + 1}`
 
-  console.log(`Count: ${count}`)
   if (typeof count === 'number' && count > 0) {
     slug = slug + `-${count + 1}`;
   }
@@ -24,4 +24,10 @@ export const createParty = async (name: string) => {
     console.error(e);
     return {created: false}
   }
- }
+}
+
+export const getPartyBySlug = async (slug: string): Promise<Party> => {
+  const sanitizedSlug = sanitizeString(slug)
+  const result = await selectPartyBySlug(sanitizeString(slug))
+  return result?.rows?.[0] as unknown as Party
+}
