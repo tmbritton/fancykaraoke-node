@@ -18,7 +18,6 @@ export const querySongById = async (id: string | number): Promise<Song | undefin
     return result.rows[0] as unknown as Song | undefined;
   } catch (e) {
     console.error(e);
-    return undefined;
   }
 };
 

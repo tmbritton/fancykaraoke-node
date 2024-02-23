@@ -6,12 +6,15 @@ let error: Error;
 if (Astro.request.method === "POST") {
   try {
     const data = await Astro.request.formData();
+
+    // Honeypot bot protection
     const honeypot = data.get('email-shazbot');
     if (honeypot) {
       throw new Error(`Honeypot | ${honeypot}`)
     }
+
+    // Proceed if honeypot is not tripped
     const partyName = data.get("party-name");
-    // Do something with the data
     const result =  await createParty(partyName as string);
 
     if (result?.created) {

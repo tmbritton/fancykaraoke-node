@@ -1,0 +1,22 @@
+---
+interface Props {
+	partyId: string;
+}
+
+const { partyId } = Astro.props;
+console.log(Astro.url.origin)
+---
+
+<footer class="host-footer">
+    <span class="partyId">Party Id: {partyId}</span>
+</footer>
+
+<style>
+  .host-footer {
+    background-color: var(--grey05);
+    padding: .5rem 2rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+</style>

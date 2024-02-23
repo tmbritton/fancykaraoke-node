@@ -14,6 +14,7 @@
     "@astrojs/node": "^8.2.0",
     "@libsql/client": "^0.4.0-pre.5",
     "astro": "^4.3.5",
+    "qrcode-generator": "^1.4.4",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
