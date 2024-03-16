@@ -4,19 +4,34 @@ interface Props {
 }
 
 const { partyId } = Astro.props;
-console.log(Astro.url.origin)
 ---
 
 <footer class="host-footer">
-    <span class="partyId">Party Id: {partyId}</span>
+  <span class="partyId">Party Id: {partyId}</span>
+  <div class="qr-wrap">
+    <span class="join-text">Scan to join:</span>
+    <img class="qr" width="150" height="150" src=`/qr.svg?partyid=${partyId}` alt=`Join Party ${partyId}` />
+  </div>
 </footer>
 
 <style>
   .host-footer {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    max-height: 2.5rem;
     background-color: var(--grey05);
     padding: .5rem 2rem;
     position: fixed;
     bottom: 0;
     width: 100%;
+  }
+  .join-text{
+    margin-right: 150px;
+  }
+  .qr {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 </style>

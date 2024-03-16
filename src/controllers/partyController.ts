@@ -1,6 +1,5 @@
 import { type Party, selectSlugCount, insertParty, selectPartyBySlug } from "../models/partyModel";
-
-const sanitizeString = (str: string) => str.trim().replace(/[^a-zA-Z 0-9-]+/gi,'');
+import { sanitizeString } from "../helpers/string";
 
 export const createParty = async (name: string) => {
   // Strip dangerous characters.

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
 import { createParty } from '../controllers/partyController';
 let error: Error;
 
@@ -32,9 +33,7 @@ if (Astro.request.method === "POST") {
 
 <Layout title="Create a party | Fancy Karaoke">
 	<div class="create-party-page">
-		<h2>Create Party</h1>
-
-    <section class="card">
+    <Card title='Create Party'>
       <form method="post" action="/create-party">
         <label for="party-name">Party Name</label>
         <input type="text" name="party-name" placeholder="Enter party name" id="party-name" required minlength="2" />
@@ -51,7 +50,7 @@ if (Astro.request.method === "POST") {
           Create party!
         </button>
       </form>
-    </section>
+    </Card>
 	</div>
 </Layout>
 

@@ -1,0 +1,52 @@
+---
+interface Props {
+  method: 'POST' | 'GET'
+  action: string
+  fieldLabel: string
+  placeholder: string
+  buttonLabel: string
+}
+
+const {method, action, fieldLabel, placeholder, buttonLabel} = Astro.props
+---
+
+<form method={method} action={action}>
+  <div class="field-wrap">
+    <label for="party-id">{fieldLabel}</label>
+    <input type="text" name="party-name" placeholder={placeholder} id="party-id" required minlength="2" />
+  </div>  
+  
+  <div class="field-wrap">
+    <slot></slot>
+  </div>
+
+  <div style={{display: 'none'}}>
+    <label for="shazbot">Enter your email address</label>
+    <input type="text" name="email-shazbot" id="email-shazbot" />
+  </div>
+
+  <div class="button-wrap">
+    <button
+    class="submit-button"
+    type="submit"
+    >
+      {buttonLabel}
+    </button>
+  </div>
+</form>
+
+<style>
+  input[type="text"] {
+    width: 100%;
+  }
+  .field-wrap {
+    margin-bottom: 1rem;
+  }
+  .button-wrap {
+    display: flex;
+    position: relative;
+  }
+  .submit-button {
+    margin-left: auto;
+  }
+</style>

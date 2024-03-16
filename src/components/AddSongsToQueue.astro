@@ -1,0 +1,18 @@
+---
+interface Props {
+	partyId: string;
+}
+
+const { partyId } = Astro.props;
+---
+
+<section class="addSongWrap">
+	<img class="qr" src=`/qr.svg?partyid=${partyId}` alt="Scan add songs to queue" />
+</section>
+
+<style>
+	.qr {
+		max-width: 100%;
+		height: auto;
+	}
+</style>

@@ -1,5 +1,6 @@
 ---
 import HostLayout from '../../layouts/HostLayout.astro';
+import AddSongsToQueue from '../../components/AddSongsToQueue.astro';
 import { getPartyBySlug } from '../../controllers/partyController';
 import { getQueueByPartyId } from '../../controllers/queueController';
 
@@ -12,9 +13,8 @@ const queue = await getQueueByPartyId(slug as string)
 <HostLayout
   title={`${party?.name} | Host Party | Fancy Karaoke`}
   partyId={slug as string}
-  
 >
-  {!party && `No party found with slug ${slug}!`}
-  {party && !queue.length && 'Add some songs to the queue!'}
+  {!party && `No party found with party id ${slug}!`}
+  {party && !queue.length && <AddSongsToQueue partyId={slug as string} />}
   {party && queue.length && 'Play some songs!'}
 </HostLayout>
