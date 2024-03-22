@@ -1,0 +1,23 @@
+---
+import Button from "./Button.astro";
+const { id, selected, controls } = Astro.props;
+---
+
+<li class="tab-list-item">
+  <Button
+    role="tab"
+    id={id}
+    selected={selected}
+    name={id}
+    variant='tab'
+    controls={controls}
+  >
+    <slot />
+  </Button>
+</li>
+
+<style>
+  .tab-list-item {
+    flex-grow: 1;
+  }
+</style>

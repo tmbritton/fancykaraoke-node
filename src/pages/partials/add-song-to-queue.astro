@@ -1,0 +1,45 @@
+---
+import TabContainer from "../../components/TabContainer.astro"
+import TabButton from "../../components/TabButton.astro"
+
+if (Astro.request.method === "POST") {
+
+  /*
+  try {
+    const data = await Astro.request.formData();
+
+    // Honeypot bot protection
+    const honeypot = data.get('email-shazbot');
+    if (honeypot) {
+      throw new Error(`Honeypot | ${honeypot}`)
+    }
+
+    // Proceed if honeypot is not tripped
+    searchTerm = data.get("search");
+    if (searchTerm) {
+      const result = await searchSongs(searchTerm as string)
+      songs = result
+    }
+    //const result =  await createParty(partyName as string);
+
+    //
+    //if (result?.created) {
+    //  return Astro.redirect(`/host/${result?.slug}`)
+    //}
+
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
+  }
+  */
+}
+---
+
+<TabContainer id="tabContainer">
+  <TabButton id="search" selected={false} slot="tabButtons">Search</TabButton>
+  <TabButton id="queue" selected={true} slot="tabButtons">Queue</TabButton>
+  <section slot="tabContent" id="queueContainer" class="tabContent">
+    Queue
+  </section>
+</TabContainer>

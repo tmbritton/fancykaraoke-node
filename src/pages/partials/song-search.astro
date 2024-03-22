@@ -1,0 +1,47 @@
+---
+import { searchSongs } from '../../controllers/songController'
+import SongSearchResult from '../../components/SongSearchResult.astro';
+
+export const partial = true;
+let songs;
+let searchTerm
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+
+    // Honeypot bot protection
+    const honeypot = data.get('email-shazbot');
+    if (honeypot) {
+      throw new Error(`Honeypot | ${honeypot}`)
+    }
+
+    // Proceed if honeypot is not tripped
+    searchTerm = data.get("search");
+    if (searchTerm) {
+      const result = await searchSongs(searchTerm as string)
+      songs = result
+    }
+    //const result =  await createParty(partyName as string);
+
+    //
+    //if (result?.created) {
+    //  return Astro.redirect(`/host/${result?.slug}`)
+    //}
+
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    }
+  }
+}
+---
+
+{songs && songs.length ? 
+  <ul id="searchResults" class="searchResultsList">
+  {songs.map(song => {
+    return <SongSearchResult artist={song.artist} title={song.title} songId={song.id} />
+  })}
+  </ul>
+  : <div id="searchResults" class="noResultsMessage">There are no results for {searchTerm}
+}

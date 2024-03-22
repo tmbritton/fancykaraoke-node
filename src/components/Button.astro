@@ -1,0 +1,78 @@
+---
+interface Props {
+  id: string
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
+  role?: string
+  name: string
+  variant?: 'primary' | 'secondary' | 'tab'
+  selected?: boolean
+  controls?: string
+}
+
+const {
+  id,
+  type = 'button',
+  disabled = false,
+  role = 'button',
+  name = '',
+  variant = 'primary',
+  selected = false,
+  controls
+} = Astro.props;
+---
+
+<button
+  id={id}
+  class={`button button-${variant} ${disabled ? `button-${variant}-disabled` : ''} ${selected ? `button-${variant}-selected` : ''}`}
+  aria-role={role}
+  aria-controls={controls}
+  name={name}
+  type={type}
+  disabled={disabled}
+  aria-selected={selected}
+>
+  <slot />
+</button>
+
+<style>
+  .button {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .button:hover:not(:disabled) {
+    cursor: pointer;
+  }
+
+  .button-primary {
+    color: var(--primary);
+    border: 3px solid var(--primary);
+    padding: .25rem;
+    background: transparent;
+    transition: color .1s ease-in-out, border-color .1s ease-in-out;
+  }
+  .button-primary:hover {
+    cursor: pointer;
+    color: var(--magenta02);
+    border-color: var(--magenta02);
+  }
+  .button-primary-disabled {
+    cursor: not-allowed;
+    color: var(--grey03);
+    border-color: var(--grey03);
+    background-color: var(--grey01);
+  }
+
+  .button-tab {
+    background-color: var(--bruise04);
+    border: 0 none;
+    border-radius: 10px 10px 0 0;
+    color: var(--bruise02);
+    width: 100%;
+  }
+  .button-tab-selected {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+</style>

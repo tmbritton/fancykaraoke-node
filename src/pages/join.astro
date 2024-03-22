@@ -1,9 +1,9 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/Card.astro';
-import PartyIdForm from '../../components/PartyIdForm.astro';
-import { selectPartyBySlug } from '../../models/partyModel';
-import { sanitizeString } from '../../helpers/string'
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import PartyIdForm from '../components/PartyIdForm.astro';
+import { selectPartyBySlug } from '../models/partyModel';
+import { sanitizeString } from '../helpers/string'
 let error: Error;
 
 if (Astro.request.method === "POST") {
@@ -18,13 +18,11 @@ if (Astro.request.method === "POST") {
 
     // Proceed if honeypot is not tripped
     const partyName = data.get("party-name") as string;
-    //const result =  await createParty(partyName as string);
     const attendeeName = data.get('attendee-name') as string;
 
     const result = partyName ? await selectPartyBySlug(partyName) : null;
 
     if (result && attendeeName) {
-      console.log(result)
       Astro.cookies.set('fk-name', sanitizeString(attendeeName));
       return Astro.redirect(`/join/${result?.slug}`);
     }

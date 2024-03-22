@@ -1,0 +1,72 @@
+---
+interface Props {
+  partyId: string
+}
+
+const { partyId } = Astro.props;
+
+---
+
+<form>
+  <div class="fieldWrap">
+    <input type="hidden" value={partyId} />
+    <label for="searchInput">Song Search</label>
+    <input 
+      type="text"
+      name="search"
+      id="searchInput"
+      placeholder="Search for song by artist or title"
+      hx-post="/partials/song-search" 
+      hx-trigger="input changed delay:500ms, search" 
+      hx-target="#searchResults" 
+      hx-indicator=".htmx-indicator"
+      hx-swap="outerHTML"
+    />
+  </div>
+  <ul id="searchResults"></ul>
+</form>
+
+<style>
+  #searchInput {
+    width: 100%;
+  }
+</style>
+
+<style is:global>
+  .fieldWrap {
+    margin-bottom: .5rem;
+  }
+  .searchResultsList {
+    padding: 0;
+  }
+  .resultTextWrap {
+    display: flex;
+    flex-direction: column;
+  }
+  .songSearchResult {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: .5rem 1.5rem;
+    margin: 0 -1.5rem;
+    cursor: pointer;
+
+    &:nth-child(odd) {
+      background-color: var(--pink01);
+      padding: .5rem 1.5rem;
+      margin: 0 -1.5rem;
+    }
+  }
+  .songArtist {
+    color: var(--grey05);
+    font-weight: 700;
+  }
+  .songTitle {
+    color: var(--grey05);
+  }
+  .searchPlusIcon {
+    color: var(--grey05);
+    font-weight: 700;
+    font-size: 2rem;
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TabContainer from '../../components/TabContainer.astro';
+import TabButton from '../../components/TabButton.astro';
+import SongSearchForm from '../../components/SongSearchForm.astro';
+import { sanitizeString } from '../../helpers/string';
+
+const { slug } = Astro.params;
+const sanitizedSlug = sanitizeString(slug as string)
+---
+
+<Layout title=`Attending Karaoke Party ${sanitizedSlug}`>
+  <TabContainer id="tabContainer">
+    <TabButton id="search" selected={true} slot="tabButtons">Search</TabButton>
+    <TabButton id="queue" selected={false} slot="tabButtons">Queue</TabButton>
+    <section slot="tabContent" id="searchContainer" class="tabContent">
+      <SongSearchForm partyId={sanitizedSlug} />
+    </section>
+  </TabContainer>
+
+</Layout>
+
