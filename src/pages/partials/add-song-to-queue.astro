@@ -4,22 +4,13 @@ import TabButton from "../../components/TabButton.astro"
 
 if (Astro.request.method === "POST") {
 
-  /*
+  
   try {
     const data = await Astro.request.formData();
+    console.log('post data')
+    console.log(data);
+    
 
-    // Honeypot bot protection
-    const honeypot = data.get('email-shazbot');
-    if (honeypot) {
-      throw new Error(`Honeypot | ${honeypot}`)
-    }
-
-    // Proceed if honeypot is not tripped
-    searchTerm = data.get("search");
-    if (searchTerm) {
-      const result = await searchSongs(searchTerm as string)
-      songs = result
-    }
     //const result =  await createParty(partyName as string);
 
     //
@@ -32,7 +23,7 @@ if (Astro.request.method === "POST") {
       console.error(err.message);
     }
   }
-  */
+  
 }
 ---
 

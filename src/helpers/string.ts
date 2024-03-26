@@ -6,4 +6,4 @@ export function makeUrlSafe(unsafeString: string): string {
   return unsafeString.replace(urlSafeRegex, "");
 }
 
-export const sanitizeString = (str: string) => str.trim().replace(/[^a-zA-Z 0-9-]+/gi,'');
+export const sanitizeString = (str: string) => str?.trim()?.replace(/[^a-zA-Z 0-9-]+/gi,'');

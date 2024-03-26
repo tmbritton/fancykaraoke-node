@@ -36,3 +36,30 @@ export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[]
     console.error(e);
   }
 };
+
+/*
+export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[] | undefined> => {
+  //await client.sync()
+  try {
+    const result = await client.execute({
+      sql: `
+        SELECT
+          id,
+          title,
+          artist,
+          youtube_id,
+          rank
+        FROM song_fts
+        WHERE song_fts MATCH :searchTerm
+        ORDER BY rank DESC
+        LIMIT :limit
+      `,
+      args: [searchTerm, limit]
+    });
+    console.log(result)
+    return result.rows as unknown as Song[] | undefined;
+  } catch (e) {
+    console.error(e);
+  }
+};
+*/

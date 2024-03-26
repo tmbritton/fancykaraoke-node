@@ -6,7 +6,9 @@ import SongSearchForm from '../../components/SongSearchForm.astro';
 import { sanitizeString } from '../../helpers/string';
 
 const { slug } = Astro.params;
-const sanitizedSlug = sanitizeString(slug as string)
+const userName = Astro.cookies.get('fk-name')?.value || '';
+const sanitizedName = sanitizeString(userName as unknown as string);
+const sanitizedSlug = sanitizeString(slug as string);
 ---
 
 <Layout title=`Attending Karaoke Party ${sanitizedSlug}`>
@@ -14,7 +16,7 @@ const sanitizedSlug = sanitizeString(slug as string)
     <TabButton id="search" selected={true} slot="tabButtons">Search</TabButton>
     <TabButton id="queue" selected={false} slot="tabButtons">Queue</TabButton>
     <section slot="tabContent" id="searchContainer" class="tabContent">
-      <SongSearchForm partyId={sanitizedSlug} />
+      <SongSearchForm partyId={sanitizedSlug} userName={sanitizedName} />
     </section>
   </TabContainer>
 

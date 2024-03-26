@@ -9,18 +9,23 @@ interface Props {
 const {title, artist, songId} = Astro.props;
 ---
 
-<li 
+<li
   class="songSearchResult"
-  title={`Add ${title} to the queue.`}
-  tabindex="0"
-  role="button"
-  hx-post="/partials/add-song-to-queue"
-  hx-target="#tabContainer"
-  value={songId}
-  >
-  <div class="resultTextWrap">
-    <span class="songArtist">{artist}</span>
-    <span class="songTitle">{title}</span>
-  </div>
-  <span class="searchPlusIcon">&plus;</span>
+>
+  <label for={songId} class="songSearchResultLabel">
+    <div>
+      <span class="songArtist">{artist}</span>
+      <span class="songTitle">{title}</span>
+    </div>
+    <input
+      type="radio"
+      name="song"
+      value={songId}
+      id={songId}
+      class="songSearchResultInput"
+      hx-post="/partials/add-song-to-queue"
+      hx-target="#tabContainer"
+    />
+    <span class="searchPlusIcon" title={`Add ${title} to song queue.`}>&plus;</span>
+  </label>
 </li>
