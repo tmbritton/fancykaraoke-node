@@ -1,5 +1,4 @@
 ---
-
 interface Props {
   title: string,
   artist: string,
@@ -25,6 +24,7 @@ const {title, artist, songId} = Astro.props;
       class="songSearchResultInput"
       hx-post="/partials/add-song-to-queue"
       hx-target="#tabContainer"
+      hx-swap="outerHTML"
     />
     <span class="searchPlusIcon" title={`Add ${title} to song queue.`}>&plus;</span>
   </label>

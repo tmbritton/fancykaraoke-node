@@ -1,0 +1,47 @@
+---
+interface Props {
+	slug: string,
+  userName: string,
+  activeTab: 'search' | 'queue'
+}
+import TabContainer from './TabContainer.astro';
+import TabButton from './TabButton.astro';
+import SongSearchForm from './SongSearchForm.astro';
+import SongQueue from './SongQueue.astro';
+
+const { slug, userName, activeTab } = Astro.props;
+---
+
+<TabContainer id="tabContainer">
+  <TabButton
+    id="search"
+    selected={activeTab === 'search'}
+    slot="tabButtons"
+    hxGet={`/attend/${slug}/search`}
+    hxTarget="#tabContainer"
+    hxSelect="#tabContainer"
+    hxSwap="outerHTML"
+  >
+    Search
+  </TabButton>
+  
+  <TabButton
+    id="queue" 
+    selected={activeTab === 'queue'}
+    slot="tabButtons"
+    hxGet={`/attend/${slug}/queue`}
+    hxTarget="#tabContainer"
+    hxSelect="#tabContainer"
+    hxSwap="outerHTML"
+  >
+    Queue
+  </TabButton>
+  <section slot="tabContent" id="searchContainer" class="tabContent">
+    {
+      activeTab === 'search' ? 
+        <SongSearchForm partySlug={slug} userName={userName} />
+      :
+        <SongQueue />
+    }
+  </section>
+</TabContainer>

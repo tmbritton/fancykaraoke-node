@@ -1,0 +1,14 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import AttendPartyTabs from '../../../components/AttendPartyTabs.astro';
+import { sanitizeString } from '../../../helpers/string';
+
+const { slug } = Astro.params;
+const userName = Astro.cookies.get('fk-name')?.value || '';
+const sanitizedName = sanitizeString(userName as unknown as string);
+const sanitizedSlug = sanitizeString(slug as string);
+---
+
+<Layout title=`Attending Karaoke Party ${sanitizedSlug}`>
+  <AttendPartyTabs userName={sanitizedName} slug={sanitizedSlug} activeTab="search" />
+</Layout>

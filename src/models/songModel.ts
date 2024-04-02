@@ -25,7 +25,6 @@ export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[]
   try {
     // Split the search string into keywords
     const keywords = searchTerm.split(/\s+/).map(keyword => `%${keyword.trim()}%`);
-
     const result = await client.execute({
       sql: "SELECT * FROM songs WHERE title LIKE :searchTerm OR artist LIKE :searchTerm LIMIT :limit",
       args: { searchTerm: `%${searchTerm}%`, limit }

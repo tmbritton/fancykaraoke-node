@@ -1,6 +1,6 @@
 ---
 import Button from "./Button.astro";
-const { id, selected, controls } = Astro.props;
+const { id, selected, controls, hxGet, hxTarget, hxSelect, hxSwap } = Astro.props;
 ---
 
 <li class="tab-list-item">
@@ -11,6 +11,10 @@ const { id, selected, controls } = Astro.props;
     name={id}
     variant='tab'
     controls={controls}
+    hxGet={hxGet}
+    hxTarget={hxTarget}
+    hxSelect={hxSelect}
+    hxSwap={hxSwap}
   >
     <slot />
   </Button>

@@ -23,3 +23,8 @@ export const selectPartyBySlug = async(slug: string): Promise<Party | null> => {
   const result = await client.execute(`SELECT * FROM parties WHERE slug="${slug}"`)
   return result.rows[0] as unknown as Party || null
 }
+
+export const getPartyIdFromSlug = async (slug: string) => {
+  const result = await client.execute(`SELECT id from parties WHERE slug="${slug}"`)
+  return result
+}

@@ -1,23 +1,21 @@
 ---
-import TabContainer from "../../components/TabContainer.astro"
-import TabButton from "../../components/TabButton.astro"
+import { addSongToQueue } from '../../controllers/queueController'
+import AttendPartyTabs from '../../components/AttendPartyTabs.astro';
+import { sanitizeString } from '../../helpers/string';
+export const partial = true;
+
+const data = await Astro.request.formData();
+const slug = sanitizeString(data.get('partySlug') as string);
+const userName = sanitizeString(data.get('userName') as string);
+const song = sanitizeString(data.get('song') as string);
 
 if (Astro.request.method === "POST") {
-
-  
   try {
-    const data = await Astro.request.formData();
-    console.log('post data')
-    console.log(data);
-    
-
-    //const result =  await createParty(partyName as string);
-
-    //
-    //if (result?.created) {
-    //  return Astro.redirect(`/host/${result?.slug}`)
-    //}
-
+    const result = await addSongToQueue(
+      slug, 
+      song,
+      userName
+    );
   } catch (err) {
     if (err instanceof Error) {
       console.error(err.message);
@@ -27,10 +25,4 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<TabContainer id="tabContainer">
-  <TabButton id="search" selected={false} slot="tabButtons">Search</TabButton>
-  <TabButton id="queue" selected={true} slot="tabButtons">Queue</TabButton>
-  <section slot="tabContent" id="queueContainer" class="tabContent">
-    Queue
-  </section>
-</TabContainer>
+<AttendPartyTabs slug={slug} userName={userName} activeTab='queue' />

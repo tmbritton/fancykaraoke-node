@@ -1,16 +1,16 @@
 ---
 interface Props {
-  partyId: string,
+  partySlug: string,
   userName: string
 }
 
-const { partyId, userName } = Astro.props;
+const { partySlug, userName } = Astro.props;
 
 ---
 
 <form>
   <div class="fieldWrap">
-    <input type="hidden" value={partyId} name="partyId" />
+    <input type="hidden" value={partySlug} name="partySlug" />
     <input type="hidden" value={userName} name="userName" />
     <label for="searchInput">Song Search</label>
     <input 

@@ -27,6 +27,6 @@ export const createParty = async (name: string) => {
 
 export const getPartyBySlug = async (slug: string): Promise<Party | null> => {
   const sanitizedSlug = sanitizeString(slug)
-  const result = await selectPartyBySlug(sanitizeString(slug))
-  return result
+  const result = await selectPartyBySlug(sanitizeString(sanitizedSlug))
+  return result as Party
 }

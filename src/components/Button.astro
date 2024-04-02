@@ -8,6 +8,10 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'tab'
   selected?: boolean
   controls?: string
+  hxGet?: string
+  hxSelect?: string
+  hxTarget?: string
+  hxSwap?: string
 }
 
 const {
@@ -18,7 +22,11 @@ const {
   name = '',
   variant = 'primary',
   selected = false,
-  controls
+  controls,
+  hxGet,
+  hxSelect,
+  hxTarget,
+  hxSwap
 } = Astro.props;
 ---
 
@@ -31,14 +39,19 @@ const {
   type={type}
   disabled={disabled}
   aria-selected={selected}
+  hx-get={hxGet}
+  hx-target={hxTarget}
+  hx-select={hxSelect}
+  hx-swap={hxSwap}
 >
-  <slot />
+  <slot/>
 </button>
 
 <style>
   .button {
     font-family: var(--font-body);
     font-weight: var(--font-weight-bold);
+    transition: color .2s ease-in-out, background-color .2s ease-in-out; border-color: .2s ease-in-out;
   }
 
   .button:hover:not(:disabled) {
@@ -50,7 +63,6 @@ const {
     border: 3px solid var(--primary);
     padding: .25rem;
     background: transparent;
-    transition: color .1s ease-in-out, border-color .1s ease-in-out;
   }
   .button-primary:hover {
     cursor: pointer;
