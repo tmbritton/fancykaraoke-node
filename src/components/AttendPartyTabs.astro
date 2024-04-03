@@ -41,7 +41,7 @@ const { slug, userName, activeTab } = Astro.props;
       activeTab === 'search' ? 
         <SongSearchForm partySlug={slug} userName={userName} />
       :
-        <SongQueue />
+        <SongQueue slug={slug} />
     }
   </section>
 </TabContainer>

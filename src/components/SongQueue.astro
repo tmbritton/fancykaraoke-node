@@ -1,7 +1,17 @@
 ---
+import { getQueueBySlug } from '../controllers/queueController'
+
+interface Props {
+  slug: string
+}
+
+const { slug } = Astro.props
+
+const queue = await getQueueBySlug(slug)
 
 ---
 
 <div class="songQueue">
   <h2>Song Queue</h2>
 </div>
+
