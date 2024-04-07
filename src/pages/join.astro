@@ -24,7 +24,7 @@ if (Astro.request.method === "POST") {
 
     if (result && attendeeName) {
       Astro.cookies.set('fk-name', sanitizeString(attendeeName));
-      return Astro.redirect(`/join/${result?.slug}`);
+      return Astro.redirect(`/attend/${result?.slug}/search`);
     }
   } catch (err) {
     if (err instanceof Error) {

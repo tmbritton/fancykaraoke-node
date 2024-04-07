@@ -1,6 +1,7 @@
 ---
 import { searchSongs } from '../../controllers/songController'
 import SongSearchResult from '../../components/SongSearchResult.astro';
+import { type Song } from '../../models/songModel';
 
 export const partial = true;
 let songs;
@@ -22,12 +23,6 @@ if (Astro.request.method === "POST") {
       const result = await searchSongs(searchTerm as string)
       songs = result
     }
-    //const result =  await createParty(partyName as string);
-
-    //
-    //if (result?.created) {
-    //  return Astro.redirect(`/host/${result?.slug}`)
-    //}
 
   } catch (err) {
     if (err instanceof Error) {
@@ -39,8 +34,8 @@ if (Astro.request.method === "POST") {
 
 {songs && songs.length ? 
   <ul id="searchResults" class="searchResultsList">
-  {songs.map(song => {
-    return <SongSearchResult artist={song.artist} title={song.title} songId={song.id} />
+  {songs.map((song: Song) => {
+    return <SongSearchResult artist={song.artist} title={song.title} songId={song.id.toString()} />
   })}
   </ul>
   : <div id="searchResults" class="noResultsMessage">There are no results for {searchTerm}

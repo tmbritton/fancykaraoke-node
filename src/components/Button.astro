@@ -1,17 +1,19 @@
 ---
 interface Props {
-  id: string
-  type?: 'button' | 'submit' | 'reset'
-  disabled?: boolean
-  role?: string
-  name: string
-  variant?: 'primary' | 'secondary' | 'tab'
-  selected?: boolean
-  controls?: string
-  hxGet?: string
-  hxSelect?: string
-  hxTarget?: string
-  hxSwap?: string
+  id: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  role?: string;
+  name: string;
+  variant?: 'primary' | 'secondary' | 'tab';
+  selected?: boolean;
+  controls?: string;
+  hxGet?: string;
+  hxSelect?: string;
+  hxTarget?: string;
+  hxSwap?: string;
+  href?: string;
+  hxPushUrl?: string
 }
 
 const {
@@ -26,26 +28,35 @@ const {
   hxGet,
   hxSelect,
   hxTarget,
-  hxSwap
+  hxSwap,
+  href,
+  hxPushUrl
 } = Astro.props;
+
+const commonProps = {
+  id,
+  class: `button button-${variant} ${disabled ? `button-${variant}-disabled` : ''} ${selected ? `button-${variant}-selected` : ''}`,
+  'aria-role': role,
+  'aria-controls': controls,
+  name,
+  'aria-selected': selected,
+  'hx-get': hxGet,
+  'hx-target': hxTarget,
+  'hx-select': hxSelect,
+  'hx-swap': hxSwap,
+  'hx-push-url': hxPushUrl
+};
 ---
 
-<button
-  id={id}
-  class={`button button-${variant} ${disabled ? `button-${variant}-disabled` : ''} ${selected ? `button-${variant}-selected` : ''}`}
-  aria-role={role}
-  aria-controls={controls}
-  name={name}
-  type={type}
-  disabled={disabled}
-  aria-selected={selected}
-  hx-get={hxGet}
-  hx-target={hxTarget}
-  hx-select={hxSelect}
-  hx-swap={hxSwap}
->
-  <slot/>
-</button>
+{href ? (
+  <a {...commonProps} href={href} data-astro-prefetch>
+    <slot />
+  </a>
+) : (
+  <button {...commonProps} type={type} disabled={disabled}>
+    <slot />
+  </button>
+)}
 
 <style>
   .button {

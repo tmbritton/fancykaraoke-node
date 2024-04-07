@@ -21,6 +21,7 @@ const { slug, userName, activeTab } = Astro.props;
     hxTarget="#tabContainer"
     hxSelect="#tabContainer"
     hxSwap="outerHTML"
+    hxPushUrl={`/attend/${slug}/search`}
   >
     Search
   </TabButton>
@@ -33,6 +34,7 @@ const { slug, userName, activeTab } = Astro.props;
     hxTarget="#tabContainer"
     hxSelect="#tabContainer"
     hxSwap="outerHTML"
+    hxPushUrl={`/attend/${slug}/queue`}
   >
     Queue
   </TabButton>
