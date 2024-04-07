@@ -1,17 +1,33 @@
 ---
 import { getQueueBySlug } from '../controllers/queueController'
+import QueueItem from './QueueItem.astro'
 
 interface Props {
-  slug: string
+  slug: string,
+  userName: string
 }
 
-const { slug } = Astro.props
+const { slug, userName } = Astro.props
 
 const queue = await getQueueBySlug(slug)
-
 ---
 
-<div class="songQueue">
-  <h2>Song Queue</h2>
-</div>
+<ol class="songQueue">
+  {queue.map((item, index) => {
+    return item.hidden 
+    ? null 
+    : <QueueItem 
+        songId={item.song_id}
+        addedBy={item.added_by}
+        priority={item.priority}
+        position={index + 1}
+      />
+  })}
+</ol>
 
+<style>
+  .songQueue {
+    list-style-type: none;
+    padding: 0;
+  }
+</style>

@@ -12,5 +12,6 @@ body {
   font-family: var(--font-body);
   color: var(--white);
   font-weight: var(--font-weight-normal);
-  background-color: var(--grey);
+  background-color: var(--grey05);
+  height: 100vh;
 }

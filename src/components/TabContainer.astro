@@ -11,27 +11,46 @@ const { id } = Astro.props;
   <ul class="tabRow">
     <slot name="tabButtons" />
   </ul>
-  <div class="tabContents" id="tabContents" role="tabpanel">
-    <slot name="tabContent" />
+  <div class="flexiContentWrapper">
+    <div class="tabContents" id="tabContents" role="tabpanel">
+      <slot name="tabContent" />
+    </div>
   </div>
 </section>
 
 <style>
   .tabContainer {
+    position: relative;
     max-width: 600px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    display: flex;
+    height: 100%;
   }
   .tabRow {
     list-style-type: none;
     display: flex;
     margin: 0;
     padding: 0;
+    flex-grow: 0;
+  }
+  .flexiContentWrapper {
+    display: flex;
+    flex: 1;
+    position: relative;
   }
   .tabContents {
-    background-color: var(--white);
+    background-color: var(--grey);
     color: var(--grey05);
     padding: 1.5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
   }
 </style>

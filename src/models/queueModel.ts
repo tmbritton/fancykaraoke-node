@@ -8,7 +8,7 @@ export type QueueItem = {
   song_id: number,
   added_by: string,
   priority: number,
-  played: boolean
+  hidden: boolean
 };
 
 export const selectQueueByPartySlug = async (slug: string, showHidden = false) => {

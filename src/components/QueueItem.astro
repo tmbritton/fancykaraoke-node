@@ -1,0 +1,48 @@
+---
+import { getSongById } from '../controllers/songController'
+interface Props {
+  songId: number,
+  addedBy: string,
+  priority: number,
+  position: number
+}
+
+const {songId, addedBy, priority, position } = Astro.props
+const song = await getSongById(songId)
+
+---
+
+<li class="queueItem">
+  <span class="songPosition">{position}</span>
+  <div class="songInfo">
+    <span class="queueSongTitle">Title: <strong>{song?.title}</strong></span>
+    <span class="queueSongArtist">Artist: <strong>{song?.artist}</strong></span>
+  </div>
+  <span class="queueSongPeformer">By: <strong>{addedBy}</strong></span>
+</li>
+
+<style>
+ .queueItem {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem 1.5rem;
+  margin: 0 -1.5rem;
+  color: var(--white);
+  align-items: center;
+  &:nth-child(even) {
+    background-color: var(--grey04);
+  }
+  .songPosition {
+    margin-right: 1.5rem;
+    font-size:2rem;
+    min-width: 2.25rem;
+  }
+  .songInfo {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1.5rem;
+  }
+  .queueSongPeformer {
+    margin-left: auto;
+  }
+</style>

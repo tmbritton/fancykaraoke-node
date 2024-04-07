@@ -62,7 +62,7 @@ const commonProps = {
   .button {
     font-family: var(--font-body);
     font-weight: var(--font-weight-bold);
-    transition: color .2s ease-in-out, background-color .2s ease-in-out; border-color: .2s ease-in-out;
+    transition: color .1s ease-in-out, background-color .1s ease-in-out; border-color: .1s ease-in-out;
   }
 
   .button:hover:not(:disabled) {
@@ -88,14 +88,18 @@ const commonProps = {
   }
 
   .button-tab {
-    background-color: var(--bruise04);
+    background-color: var(--grey05);
+    padding: .5rem 1.5rem;
     border: 0 none;
-    border-radius: 10px 10px 0 0;
-    color: var(--bruise02);
-    width: 100%;
+    color: var(--grey02);
+    border-top: 2px solid var(--grey04);
+    &:hover {
+      background-color: var(--grey);
+    }
   }
   .button-tab-selected {
-    background-color: var(--primary);
+    background-color: var(--grey);
     color: var(--white);
+    border-top: 2px solid var(--primary);
   }
 </style>
