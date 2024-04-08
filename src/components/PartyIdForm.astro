@@ -1,4 +1,6 @@
 ---
+import Button from './Button.astro'
+
 interface Props {
   method: 'POST' | 'GET'
   action: string
@@ -26,12 +28,14 @@ const {method, action, fieldLabel, placeholder, buttonLabel} = Astro.props
   </div>
 
   <div class="button-wrap">
-    <button
-    class="submit-button"
-    type="submit"
+    <Button
+      className="submit-button"
+      type="submit"
+      id="party-submit"
+      name="submit"
     >
       {buttonLabel}
-    </button>
+    </Button
   </div>
 </form>
 

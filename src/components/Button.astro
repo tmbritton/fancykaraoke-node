@@ -1,6 +1,7 @@
 ---
 interface Props {
   id: string;
+  className?: string;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   role?: string;
@@ -13,11 +14,12 @@ interface Props {
   hxTarget?: string;
   hxSwap?: string;
   href?: string;
-  hxPushUrl?: string
+  hxPushUrl?: string;
 }
 
 const {
   id,
+  className = '',
   type = 'button',
   disabled = false,
   role = 'button',
@@ -35,7 +37,7 @@ const {
 
 const commonProps = {
   id,
-  class: `button button-${variant} ${disabled ? `button-${variant}-disabled` : ''} ${selected ? `button-${variant}-selected` : ''}`,
+  class: `button button-${variant} ${disabled ? `button-${variant}-disabled` : ''} ${selected ? `button-${variant}-selected` : ''} ${className}`,
   'aria-role': role,
   'aria-controls': controls,
   name,
@@ -61,8 +63,15 @@ const commonProps = {
 <style>
   .button {
     font-family: var(--font-body);
-    font-weight: var(--font-weight-bold);
-    transition: color .1s ease-in-out, background-color .1s ease-in-out; border-color: .1s ease-in-out;
+    transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out;
+    padding: .5rem;
+    border: 0 none;
+    min-width: 10rem;
+    text-align: left;
+    &:focus-visible {
+      outline: 2px solid var(--white);
+      outline-offset: -2px;
+    }
   }
 
   .button:hover:not(:disabled) {
@@ -70,20 +79,16 @@ const commonProps = {
   }
 
   .button-primary {
-    color: var(--primary);
-    border: 3px solid var(--primary);
-    padding: .25rem;
-    background: transparent;
+    color: var(--white);
+    background-color: var(--primary);
   }
-  .button-primary:hover {
+  .button-primary:hover:not(:disabled) {
     cursor: pointer;
-    color: var(--magenta02);
-    border-color: var(--magenta02);
+    background-color: var(--magenta02);
   }
   .button-primary-disabled {
     cursor: not-allowed;
     color: var(--grey03);
-    border-color: var(--grey03);
     background-color: var(--grey01);
   }
 
