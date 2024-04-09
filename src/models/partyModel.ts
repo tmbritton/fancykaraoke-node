@@ -30,5 +30,5 @@ export const getPartyIdFromSlug = async (slug: string) => {
     sql: 'SELECT id from parties WHERE slug = ?',
     args: [slug]
   });
-  return result?.rows?.[0]?.id
+  return result?.rows?.[0]?.id as number
 }

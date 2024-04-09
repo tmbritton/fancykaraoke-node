@@ -18,14 +18,15 @@ import '../styles/global.css';
 		<header>
 			<h1><a href="/">Fancy Karaoke</a></h1>
 		</header>
-		<main>
-			<slot />
+		<main class="hostMain">
+			<div class="videoPane">
+				<slot name="video"/>
+			</div>
+			<div class="sidePane">
+				<slot name="side" />
+			</div>
 		</main>
 		<HostFooter partyId={partyId} />
-		<script>
-			import defineButton from '../components/button';
-			defineButton()
-		</script>
 		<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
 	</body>
 </html>
@@ -37,7 +38,19 @@ import '../styles/global.css';
 		color: var(----grey);
 		padding: .5rem 2rem;
 	}
-	main {
+	.hostMain {
+		display: flex;
+		flex-direction: row;
 		padding: 1.5rem 2rem;
+	}
+	.videoPane {
+		width: 75%;
+		margin-right: 2rem;
+	}
+	.sidePane {
+		width: 25%;
+		padding: 0 1.5rem;
+    max-height: calc(100vh - 150px - 65px - 50px);
+    overflow-y: auto;
 	}
 </style>

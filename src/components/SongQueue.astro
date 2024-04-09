@@ -4,25 +4,26 @@ import QueueItem from './QueueItem.astro'
 
 interface Props {
   slug: string,
-  userName: string
 }
 
-const { slug, userName } = Astro.props
+const { slug } = Astro.props
 
 const queue = await getQueueBySlug(slug)
+
+const filteredQueue = queue.filter((song, index) => {
+  return index === 0 || song.hidden ? false : true
+})
 ---
 
 <ol class="songQueue">
-  {queue.map((item, index) => {
-    return item.hidden 
-    ? null 
-    : <QueueItem 
-        songId={item.song_id}
-        addedBy={item.added_by}
-        priority={item.priority}
-        position={index + 1}
-      />
-  })}
+  {filteredQueue.map((item, index) =>
+    <QueueItem 
+      songId={item.song_id}
+      addedBy={item.added_by}
+      priority={item.priority}
+      position={index + 1}
+    />
+  )}
 </ol>
 
 <style>

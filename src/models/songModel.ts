@@ -9,7 +9,7 @@ export type Song = {
   created_at: string
 }
 
-export const querySongById = async (id: string | number): Promise<Song | undefined> => {
+export const selectSongById = async (id: string | number): Promise<Song | undefined> => {
   try {
     const result = await client.execute({
       sql: "select * from songs where id = :id",

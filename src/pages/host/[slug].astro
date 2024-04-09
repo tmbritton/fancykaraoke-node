@@ -1,20 +1,40 @@
 ---
 import HostLayout from '../../layouts/HostLayout.astro';
 import AddSongsToQueue from '../../components/AddSongsToQueue.astro';
+import VideoPlayer from '../../components/VideoPlayer.astro';
 import { getPartyBySlug } from '../../controllers/partyController';
-import { getQueueByPartyId } from '../../controllers/queueController';
+import { getCurrentSong } from '../../controllers/queueController';
+import SongQueue from '../../components/SongQueue.astro';
+import { sanitizeString } from '../../helpers/string';
 
 const { slug } = Astro.params;
-const party = await getPartyBySlug(slug as string)
-const queue = await getQueueByPartyId(slug as string)
-
+const party = await getPartyBySlug(slug as string);
+const sanitizedSlug = sanitizeString(slug as string);
+const currentSong = await getCurrentSong(sanitizedSlug)
 ---
 
 <HostLayout
   title={`${party?.name} | Host Party | Fancy Karaoke`}
   partyId={slug as string}
 >
-  {!party && `No party found with party id ${slug}!`}
-  {party && !queue.length && <AddSongsToQueue partyId={slug as string} />}
-  {party && queue.length && 'Play some songs!'}
+  <section class="videoSection" slot="video">
+    <VideoPlayer songId={currentSong?.id as number} />
+  </section>
+  <section class="queueSection" slot="side">
+    <SongQueue slug={sanitizedSlug}/>
+  </section>
 </HostLayout>
+
+<style>
+  .videoSection {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+  .videoSection::after {
+    display: block;
+    content: "";
+    padding-top: 56.25%;
+  }
+
+</style>
