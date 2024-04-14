@@ -1,0 +1,28 @@
+---
+import { sanitizeString } from "../../helpers/string";
+import { removeSongFromQueue, getCurrentSong } from "../../controllers/queueController";
+import { type CurrentSong } from "../../models/songModel";
+import VideoPlayer from "../../components/VideoPlayer.astro";
+export const partial = true;
+const data = await Astro.request.formData();
+const id = sanitizeString(data.get('queueItemId') as string);
+const slug = sanitizeString(data.get('slug') as string);
+let newSong: CurrentSong | undefined = undefined;
+
+if (Astro.request.method === "POST") {
+
+  if (!id || !slug) {
+    return new Response(JSON.stringify({message: 'incomplete data'}), { status: 400 })
+  }
+
+  try {
+    await removeSongFromQueue(id);
+    newSong = await getCurrentSong(slug);
+  } catch (e) {
+    console.log(e)
+    return new Response(JSON.stringify({message: e}), { status: 400 })
+  }
+
+}
+---
+{ newSong ? <VideoPlayer songId={newSong?.id} partySlug={slug} queueItemId={newSong.queue_id} autoplay={1}/> : ''}

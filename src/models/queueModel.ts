@@ -59,7 +59,7 @@ export const selectCurrentSongByPartySlug = async (partySlug: string) => {
   try {
     const result = await client.execute({
       sql: `
-        SELECT s.*
+        SELECT s.*, q.id AS queue_id
         FROM songs s
         JOIN queue q ON s.id = q.song_id
         JOIN parties p ON q.party_id = p.id
@@ -79,3 +79,23 @@ export const selectCurrentSongByPartySlug = async (partySlug: string) => {
     return null;
   }
 };
+
+export const hideQueueItem = async (id: number) => {
+  try {
+    const result = await client.execute({
+      sql: `
+        UPDATE queue
+        SET hidden = true
+        WHERE 
+          queue.id = ?
+      `,
+      args: [id]
+    })
+    console.log(result)
+    await client.sync()
+    return result
+  } catch (e) {
+    console.error(e)
+    return null
+  }
+}

@@ -1,8 +1,7 @@
-import { type QueueItem, selectQueueByPartySlug, insertQueueItem, getQueueLengthByPartyId, selectCurrentSongIdByPartyId, selectCurrentSongByPartySlug} from "../models/queueModel";
+import { type QueueItem, selectQueueByPartySlug, insertQueueItem, getQueueLengthByPartyId, selectCurrentSongByPartySlug, hideQueueItem} from "../models/queueModel";
+import { type CurrentSong } from '../models/songModel';
 import { getPartyBySlug } from "./partyController";
 import { sanitizeString } from "../helpers/string";
-import { getPartyIdFromSlug } from '../models/partyModel';
-import { getSongById } from './songController';
 
 export const getQueueBySlug = async (slug: string): Promise<QueueItem[]> => {
   const sanitizedSlug = sanitizeString(slug);
@@ -25,6 +24,13 @@ export const addSongToQueue = async (partySlug: string, songId: string | number,
 
 export const getCurrentSong = async (partySlug: string) => {
   const sanitizedSlug = sanitizeString(partySlug);
-  const song = await selectCurrentSongByPartySlug(partySlug)
+  const song = await selectCurrentSongByPartySlug(partySlug) as unknown as CurrentSong
   return song;
+}
+
+export const removeSongFromQueue = async (queueItemId: string | number) => {
+  let id: number;
+  typeof queueItemId === 'string' ? id = parseInt(queueItemId) : id = queueItemId;
+  const result = await hideQueueItem(id)
+  return result
 }

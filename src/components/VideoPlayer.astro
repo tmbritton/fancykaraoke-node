@@ -2,22 +2,36 @@
 import { getSongById } from '../controllers/songController'
 
 interface Props{
-  songId: number
+  songId: number,
+  queueItemId: number,
+  partySlug: string,
+  autoplay: 0 | 1
 }
 
-const { songId } = Astro.props
+const { songId, queueItemId, partySlug, autoplay } = Astro.props
 
 const song = await getSongById(songId)
 ---
 
-<iframe
-  class="videoPlayer"
-  src=`https://www.youtube.com/embed/${song?.youtube_id}`
-  title="YouTube video player"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen>
-</iframe>
+<div id="videoPlayerWrapper">
+  <input type="hidden" name="queueItemId" value={queueItemId} />
+  <input type="hidden" name="slug" value={partySlug} />
+  <iframe
+    id="ytPlayer"
+    class="videoPlayer"
+    src=`https://www.youtube.com/embed/${song?.youtube_id}?enablejsapi=1&origin=${Astro.url.origin}&autoplay=${autoplay}`
+    title="YouTube video player"
+    allow="autoplay; clipboard-write; encrypted-media"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+    hx-trigger="videoEnd"
+    hx-post="/partials/next-video"
+    hx-include="[name='queueItemId'], [name='slug']"
+    hx-swap="outerHTML"
+    hx-target="#videoPlayerWrapper"
+  >
+  </iframe>
+</div>
 
 <style>
   .videoPlayer {

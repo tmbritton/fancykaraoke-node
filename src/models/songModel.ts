@@ -9,6 +9,10 @@ export type Song = {
   created_at: string
 }
 
+export interface CurrentSong extends Song {
+  queue_id: number
+}
+
 export const selectSongById = async (id: string | number): Promise<Song | undefined> => {
   try {
     const result = await client.execute({

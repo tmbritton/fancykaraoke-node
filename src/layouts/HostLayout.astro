@@ -54,3 +54,34 @@ import '../styles/global.css';
     overflow-y: auto;
 	}
 </style>
+
+<script>
+	// 2. This code loads the IFrame Player API code asynchronously.
+	const tag = document.createElement('script');
+
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+
+	// 3. This function creates an <iframe> (and YouTube player)
+	//    after the API code downloads.
+	let player;
+	// @ts-ignore
+	window.onYouTubeIframeAPIReady = function () {
+		// @ts-ignore
+		player = new YT.Player('ytPlayer', {
+			events: {
+				'onStateChange': onPlayerStateChange
+			}
+		});
+	}
+
+	function onPlayerStateChange(event) {
+		// @ts-ignore
+		if (event.data === YT?.PlayerState?.ENDED) {
+			const event = new Event('videoEnd');
+			const player = document.getElementById('ytPlayer')
+			player?.dispatchEvent(event)
+		}
+	}
+</script>
