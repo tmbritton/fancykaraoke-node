@@ -15,7 +15,12 @@ const filteredQueue = queue.filter((song, index) => {
 })
 ---
 
-<ol class="songQueue">
+<ol
+  class="songQueue"
+  id="songQueue"
+  hx-get=`/partials/updated-queue?slug=${slug}`
+  hx-trigger="queueUpdated"
+  >
   {filteredQueue.map((item, index) =>
     <QueueItem 
       songId={item.song_id}

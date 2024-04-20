@@ -1,0 +1,8 @@
+---
+import SongQueue from "../../components/SongQueue.astro"
+
+const slug = Astro.url.searchParams.get('slug') as string;
+export const partial = true;
+---
+
+<SongQueue slug={slug} />

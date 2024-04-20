@@ -7,7 +7,7 @@ export interface Subscription {
 
 type SubscriptionTypes = 'queueUpdated';
 
-type Dispatch = {type: 'queueUpdated', payload: any}
+type Dispatch = {type: SubscriptionTypes, payload: any}
 
 /**
  * Publish events with a payload.
@@ -53,7 +53,7 @@ const PubSub = (() => {
    * @param type Type of event.
    * @param payload
    */
-  const publish = (type: SubscriptionTypes, payload: object): void => {
+  const publish = (type: SubscriptionTypes, payload: Record<string, string>): void => {
     if (subscriptions.hasOwnProperty(type)) {
       subscriptions[type].forEach((subscription) => subscription.callback(payload));
     }
