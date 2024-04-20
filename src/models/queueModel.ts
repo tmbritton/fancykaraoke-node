@@ -91,11 +91,41 @@ export const hideQueueItem = async (id: number) => {
       `,
       args: [id]
     })
-    console.log(result)
     await client.sync()
-    return result
+    return result.rowsAffected
   } catch (e) {
     console.error(e)
     return null
+  }
+}
+
+export const selectPartyIdByQueueId = async (queueId: number): Promise<number | null> => {
+  try {
+    const result = await client.execute({
+      sql: `SELECT party_id FROM queue WHERE id = ?`,
+      args: [queueId]
+    });
+    return result?.rows?.[0]?.party_id as number;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export const selectPartySlugByQueueId = async (queueId: number): Promise<string | null> => {
+  try {
+    const result = await client.execute({
+      sql: `
+        SELECT p.slug
+        FROM parties p
+        JOIN queue q ON q.party_id = p.id
+        WHERE q.id = ?
+      `,
+      args: [queueId]
+    })
+    return result?.rows?.[0]?.slug as string;
+  } catch (e) {
+    console.error(e);
+    return null;
   }
 }

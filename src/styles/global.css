@@ -5,7 +5,6 @@
 
 /* Defaults for basic elements */
 @import url('./card.css');
-@import url('./button.css');
 @import url('./inputs.css');
 
 body {
