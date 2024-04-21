@@ -15,6 +15,8 @@
     "@libsql/client": "^0.4.0-pre.5",
     "@types/youtube-player": "^5.5.11",
     "astro": "^4.3.5",
+    "axios": "^1.6.8",
+    "cheerio": "1.0.0-rc.12",
     "qrcode": "^1.5.3",
     "typescript": "^5.3.3"
   },

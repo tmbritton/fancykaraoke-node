@@ -1,0 +1,26 @@
+name: Import Karaoke Songs
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+jobs:
+  get_songs:
+    runs-on: "ubuntu-20.04"
+    env:
+      FK_DB_URL: ${{ secrets.FK_DB_URL }}
+      FK_DB_TOKEN: ${{ secrets.FK_DB_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.2.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm script
+        run: npm run scraper.js 10000 
