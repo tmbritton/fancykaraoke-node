@@ -74,6 +74,7 @@ const main = async () => {
       });
 
       if (result) {
+        console.log(`Imported artist: ${song.artist}, title: ${song.title}`);
         success++;
       }
     } catch (e) {
