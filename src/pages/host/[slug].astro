@@ -4,6 +4,7 @@ import VideoPlayer from '../../components/VideoPlayer.astro';
 import { getPartyBySlug } from '../../controllers/partyController';
 import { getCurrentSong } from '../../controllers/queueController';
 import SongQueue from '../../components/SongQueue.astro';
+import ScanToJoin from '../../components/ScanToJoin.astro';
 import { sanitizeString } from '../../helpers/string';
 
 const { slug } = Astro.params;
@@ -24,7 +25,9 @@ const currentSong = await getCurrentSong(sanitizedSlug)
         queueItemId={currentSong?.queue_id}
         autoplay={0}
       />
-    : 'Add some songs to the queue!' }
+    : 
+      <ScanToJoin id={party?.id as number} name={party?.name as string} />
+    }
   </section>
   <section class="queueSection" slot="side">
     <SongQueue slug={sanitizedSlug}/>

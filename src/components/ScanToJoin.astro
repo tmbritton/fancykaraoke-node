@@ -1,0 +1,20 @@
+---
+interface Props {
+  id: number | string
+  name: string
+};
+
+const {id, name} = Astro.props;
+---
+<div class="scanToJoin">
+  <p class="scanToJoin__text">
+    Scan to join party, search for songs, and add them to the queue!
+  </p>
+  <img class="qr" width="500" height="500" src=`/qr.svg?partyid=${id}` alt=`Join Party ${name}` />
+</div>
+
+<style>
+  .scanToJoin__text {
+    margin-bottom: 1rem;
+  }
+</style>
