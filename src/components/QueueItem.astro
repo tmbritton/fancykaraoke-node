@@ -17,8 +17,8 @@ const song = await getSongById(songId)
   <div class="songInfo">
     <span class="queueSongTitle">Title: <strong>{song?.title}</strong></span>
     <span class="queueSongArtist">Artist: <strong>{song?.artist}</strong></span>
+    <span class="queueSongPeformer">Added By: <strong>{addedBy}</strong></span>
   </div>
-  <span class="queueSongPeformer">By: <strong>{addedBy}</strong></span>
 </li>
 
 <style>
@@ -41,8 +41,5 @@ const song = await getSongById(songId)
     display: flex;
     flex-direction: column;
     margin-right: 1.5rem;
-  }
-  .queueSongPeformer {
-    margin-left: auto;
   }
 </style>

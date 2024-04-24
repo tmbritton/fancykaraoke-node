@@ -17,12 +17,14 @@ const currentSong = await getCurrentSong(sanitizedSlug)
   partyId={slug as string}
 >
   <section class="videoSection" slot="video">
-    <VideoPlayer
-      songId={currentSong?.id as number}
-      partySlug={slug as string}
-      queueItemId={currentSong.queue_id}
-      autoplay={0}
-    />
+    { currentSong ?
+      <VideoPlayer
+        songId={currentSong?.id as number}
+        partySlug={slug as string}
+        queueItemId={currentSong?.queue_id}
+        autoplay={0}
+      />
+    : 'Add some songs to the queue!' }
   </section>
   <section class="queueSection" slot="side">
     <SongQueue slug={sanitizedSlug}/>
@@ -40,5 +42,4 @@ const currentSong = await getCurrentSong(sanitizedSlug)
     content: "";
     padding-top: 56.25%;
   }
-
 </style>

@@ -6,7 +6,7 @@ interface Props {
   disabled?: boolean;
   role?: string;
   name: string;
-  variant?: 'primary' | 'secondary' | 'tab';
+  variant?: 'primary' | 'tertiary' | 'tab';
   selected?: boolean;
   controls?: string;
   hxGet?: string;
@@ -15,6 +15,10 @@ interface Props {
   hxSwap?: string;
   href?: string;
   hxPushUrl?: string;
+  hxTrigger?: string;
+  hxPost?: string;
+  hxInclude?: string;
+  hxConfirm?: string;
 }
 
 const {
@@ -32,7 +36,11 @@ const {
   hxTarget,
   hxSwap,
   href,
-  hxPushUrl
+  hxPushUrl,
+  hxTrigger,
+  hxPost,
+  hxInclude,
+  hxConfirm
 } = Astro.props;
 
 const commonProps = {
@@ -46,7 +54,11 @@ const commonProps = {
   'hx-target': hxTarget,
   'hx-select': hxSelect,
   'hx-swap': hxSwap,
-  'hx-push-url': hxPushUrl
+  'hx-push-url': hxPushUrl,
+  'hx-trigger': hxTrigger,
+  'hx-post': hxPost,
+  'hx-include': hxInclude,
+  'hx-confirm': hxConfirm
 };
 ---
 
@@ -64,7 +76,7 @@ const commonProps = {
   .button {
     font-family: var(--font-body);
     transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out;
-    padding: .5rem;
+    padding: .5rem 3rem .5rem .5rem;
     border: 0 none;
     min-width: 10rem;
     text-align: left;
@@ -90,6 +102,19 @@ const commonProps = {
     cursor: not-allowed;
     color: var(--grey03);
     background-color: var(--grey01);
+  }
+
+  .button-tertiary {
+    color: var(--white);
+    border: 2px solid var(--white);
+    background-color: transparent;
+  }
+  .button-tertiary:hover:not(:disabled) {
+    background-color: var(--bruise04);
+  }
+  .button-tertiary-disabled {
+    cursor: not-allowed;
+    opacity: .7;
   }
 
   .button-tab {

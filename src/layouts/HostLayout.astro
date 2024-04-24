@@ -1,6 +1,7 @@
 ---
 import HeadMeta from '../components/HeadMeta.astro';
 import HostFooter from '../components/HostFooter.astro';
+import HostHeader from '../components/HostHeader.astro';
 
 interface Props {
 	title: string;
@@ -15,9 +16,7 @@ import '../styles/global.css';
 <html lang="en">
 	<HeadMeta title={title} />
 	<body hx-boost>
-		<header>
-			<h1><a href="/">Fancy Karaoke</a></h1>
-		</header>
+		<HostHeader />
 		<main class="hostMain">
 			<div class="videoPane">
 				<slot name="video"/>
@@ -33,12 +32,6 @@ import '../styles/global.css';
 </html>
 
 <style>
-	header {
-		background-color: var(--primary);
-		border-bottom: 1px solid var(--magenta04);
-		color: var(----grey);
-		padding: .5rem 2rem;
-	}
 	.hostMain {
 		display: flex;
 		flex-direction: row;
