@@ -19,7 +19,7 @@ const filteredQueue = queue.filter((song, index) => {
   class="songQueue"
   id="songQueue"
   hx-get=`/partials/updated-queue?slug=${slug}`
-  hx-trigger="queueUpdated"
+  hx-trigger="queueUpdated from:body"
   >
   {filteredQueue.map((item, index) =>
     <QueueItem 

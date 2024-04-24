@@ -24,7 +24,7 @@ const song = await getSongById(songId)
     allow="autoplay; clipboard-write; encrypted-media"
     referrerpolicy="strict-origin-when-cross-origin"
     allowfullscreen
-    hx-trigger="videoEnd"
+    hx-trigger="videoEnd from:body"
     hx-post="/partials/next-video"
     hx-include="[name='queueItemId'], [name='slug']"
     hx-swap="outerHTML"

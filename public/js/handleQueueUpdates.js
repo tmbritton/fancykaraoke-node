@@ -23,13 +23,8 @@
 
       // If event pertains to this party.
       if (data && slug === data.slug) {
-        const queueElement = document.getElementById('songQueue');
         const event = new Event('queueUpdated');
-        if (queueElement) {
-          queueElement.dispatchEvent(event);
-        } else {
-          console.warn('No queue found on page :(');
-        }
+        document.body.dispatchEvent(event);
       }
 
     });

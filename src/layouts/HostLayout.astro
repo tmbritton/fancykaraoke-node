@@ -79,8 +79,7 @@ import '../styles/global.css';
 		// @ts-ignore
 		if (event.data === YT?.PlayerState?.ENDED) {
 			const event = new Event('videoEnd');
-			const player = document.getElementById('ytPlayer')
-			player?.dispatchEvent(event)
+			document.body.dispatchEvent(event)
 		}
 	}
 
