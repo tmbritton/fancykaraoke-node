@@ -72,7 +72,6 @@ export const selectCurrentSongByPartySlug = async (partySlug: string) => {
       `,
       args: [sanitizedSlug, false, false],
     });
-
     return result?.rows?.length > 0 ? result?.rows?.[0] : null;
   } catch (e) {
     console.error(e);
@@ -143,7 +142,6 @@ export const selectQueueCountByPartySlug = async (slug: string): Promise<number 
       args: [slug]
     })
 
-    console.log(result)
     return result?.rows?.[0]?.['COUNT(*)'] as number;
   } catch(e) {
     console.error(e)

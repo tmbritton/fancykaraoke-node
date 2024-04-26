@@ -16,6 +16,7 @@ const currentSong = await getCurrentSong(sanitizedSlug)
 <HostLayout
   title={`${party?.name} | Host Party | Fancy Karaoke`}
   partyId={slug as string}
+  hasCurrentSong={!!currentSong}
 >
   <section class={`videoSection ${currentSong ? 'hasVideo' : ''}`} slot="video">
     { currentSong ?

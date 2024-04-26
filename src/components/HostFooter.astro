@@ -1,17 +1,16 @@
 ---
+import FooterQR from './FooterQR.astro';
 interface Props {
 	partyId: string;
+  showQR: boolean;
 }
 
-const { partyId } = Astro.props;
+const { partyId, showQR } = Astro.props;
 ---
 
 <footer class="host-footer">
   <span class="partyId">Party Id: {partyId}</span>
-  <div class="qr-wrap">
-    <span class="join-text">Scan to join:</span>
-    <img class="qr" width="150" height="150" src=`/qr.svg?partyid=${partyId}` alt=`Join Party ${partyId}` />
-  </div>
+  <FooterQR slug={partyId} showQR={showQR} />
 </footer>
 
 <style>
@@ -25,13 +24,5 @@ const { partyId } = Astro.props;
     position: fixed;
     bottom: 0;
     width: 100%;
-  }
-  .join-text{
-    margin-right: 150px;
-  }
-  .qr {
-    position: absolute;
-    bottom: 0;
-    right: 0;
   }
 </style>

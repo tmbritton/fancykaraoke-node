@@ -1,0 +1,38 @@
+---
+interface Props {
+  slug: string
+  showQR: boolean
+}
+
+const { slug, showQR } = Astro.props;
+---
+<div
+  class="qr-wrap"
+  hx-get=`/partials/footer-qr?slug=${slug}`
+  hx-trigger="queueUpdated from:body"
+  hx-swap="outerHTML"  
+>
+  { showQR && (
+    <span class="join-text">
+      Scan to join:
+    </span>
+    <img
+      class="qr"
+      width="150"
+      height="150"
+      src={`/qr.svg?partyid=${slug}`}
+      alt={`Join Party ${slug}`}
+    />
+  )}
+</div>
+
+<style>
+  .join-text{
+    margin-right: 150px;
+  }
+  .qr {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+</style>

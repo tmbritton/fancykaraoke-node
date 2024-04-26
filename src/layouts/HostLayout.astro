@@ -6,9 +6,10 @@ import HostHeader from '../components/HostHeader.astro';
 interface Props {
 	title: string;
 	partyId: string;
+	hasCurrentSong: boolean;
 }
 
-const { title, partyId } = Astro.props;
+const { title, partyId, hasCurrentSong } = Astro.props;
 import '../styles/global.css';
 
 ---
@@ -25,7 +26,7 @@ import '../styles/global.css';
 				<slot name="side" />
 			</div>
 		</main>
-		<HostFooter partyId={partyId} />
+		<HostFooter partyId={partyId} showQR={hasCurrentSong} />
 		<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
 	</body>
 </html>
