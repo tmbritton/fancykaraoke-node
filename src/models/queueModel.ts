@@ -129,3 +129,25 @@ export const selectPartySlugByQueueId = async (queueId: number): Promise<string 
     return null;
   }
 }
+
+export const selectQueueCountByPartySlug = async (slug: string): Promise<number | null> => {
+  try {
+    const result = await client.execute({
+      sql: `
+        SELECT COUNT(*)
+        FROM queue q
+        JOIN parties p on q.party_id = p.id
+        WHERE p.slug = ?
+        AND hidden = false 
+      `,
+      args: [slug]
+    })
+
+    console.log(result)
+    return result?.rows?.[0]?.['COUNT(*)'] as number;
+  } catch(e) {
+    console.error(e)
+    return null
+  }
+
+}

@@ -1,24 +1,10 @@
 ---
-import Button from "./Button.astro"
+import SkipSongButton from "./SkipSongButton.astro"
 ---
 
 <header class="site-header">
 	<h1><a href="/">Fancy Karaoke</a></h1>
-
-  <Button
-    id="skip-video-button"
-    className="skip-button"
-    name="skip"
-    variant="tertiary"
-    hxTrigger="click"
-    hxPost="/partials/next-video"
-    hxInclude="[name='queueItemId'], [name='slug']"
-    hxSwap="outerHTML"
-    hxTarget="#videoPlayerWrapper"
-    hxConfirm="Are you sure you want to skip this song?"
-  >
-    Skip current song &rarr; 
-  </Button>
+  <SkipSongButton showButton={false} />
 </header>
 
 <style>

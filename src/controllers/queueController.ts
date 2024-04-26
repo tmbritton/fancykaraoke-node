@@ -1,4 +1,4 @@
-import { type QueueItem, selectQueueByPartySlug, insertQueueItem, getQueueLengthByPartyId, selectCurrentSongByPartySlug, hideQueueItem, selectPartySlugByQueueId} from "../models/queueModel";
+import { type QueueItem, selectQueueByPartySlug, insertQueueItem, getQueueLengthByPartyId, selectCurrentSongByPartySlug, hideQueueItem, selectPartySlugByQueueId, selectQueueCountByPartySlug} from "../models/queueModel";
 import { type CurrentSong } from '../models/songModel';
 import { getPartyBySlug } from "./partyController";
 import { sanitizeString } from "../helpers/string";
@@ -41,4 +41,10 @@ export const removeSongFromQueue = async (queueItemId: string | number) => {
     }
   }
   return result
+}
+
+export const getQueueCountByPartySlug = async (slug: string) => {
+  const sanitizedSlug = sanitizeString(slug);
+
+  return await selectQueueCountByPartySlug(sanitizedSlug);
 }

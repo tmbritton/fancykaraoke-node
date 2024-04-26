@@ -6,7 +6,12 @@ interface Props {
 
 const {id, name} = Astro.props;
 ---
-<div class="scanToJoin">
+<div 
+  class="scanToJoin"
+  hx-get="/partials/current-video"
+  hx-trigger="queueUpdated from:body"
+  hx-swap="outerHTML"
+>
   <p class="scanToJoin__text">
     Scan to join party, search for songs, and add them to the queue!
   </p>

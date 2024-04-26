@@ -1,0 +1,33 @@
+---
+import Button from "./Button.astro"
+
+interface Props {
+  showButton: boolean
+};
+
+const { showButton } = Astro.props;
+---
+<div
+  id="skip-video-wrap"
+  hx-get="/partials/skip-button"
+  hx-trigger="queueUpdated from:body"
+  hx-swap="outerHTML"
+  hx-include="[name='slug']"
+>
+  {showButton &&
+    <Button
+      id="skip-video-button"
+      className="skip-button"
+      name="skip"
+      variant="tertiary"
+      hxTrigger="click"
+      hxPost="/partials/next-video"
+      hxInclude="[name='queueItemId'], [name='slug']"
+      hxSwap="outerHTML"
+      hxTarget="#videoPlayerWrapper"
+      hxConfirm="Are you sure you want to skip this song?"
+    >
+      Skip current song &rarr; 
+    </Button>
+  }
+</div>

@@ -1,0 +1,22 @@
+---
+export const partial = true;
+
+import SkipSongButton from "../../components/SkipSongButton.astro";
+import { getQueueCountByPartySlug } from '../../controllers/queueController';
+
+let songCount = 0;
+
+if (Astro.request.method === "GET") {
+  /*
+  await Astro.request.json()
+    .then(res => console.log(res))
+    .catch(e => console.log(e))
+  */
+  const slug = await Astro.url.searchParams.get('slug')
+
+  songCount = await getQueueCountByPartySlug(slug as string) as number;
+
+}
+---
+
+<SkipSongButton showButton={!!songCount} />
