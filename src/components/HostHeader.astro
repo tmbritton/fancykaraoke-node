@@ -1,10 +1,20 @@
 ---
-import SkipSongButton from "./SkipSongButton.astro"
+import SkipSongButton from "./SkipSongButton.astro";
+import { getQueueCountByPartySlug } from '../controllers/queueController';
+
+interface Props {
+  partyId: string
+};
+
+const { partyId } = Astro.props;
+
+const count = await getQueueCountByPartySlug(partyId);
+const showButton = count && count > 0;
 ---
 
 <header class="site-header">
 	<h1><a href="/">Fancy Karaoke</a></h1>
-  <SkipSongButton showButton={false} />
+  <SkipSongButton showButton={!!showButton} />
 </header>
 
 <style>
