@@ -17,7 +17,7 @@ const currentSong = await getCurrentSong(sanitizedSlug)
   title={`${party?.name} | Host Party | Fancy Karaoke`}
   partyId={slug as string}
 >
-  <section class="videoSection" slot="video">
+  <section class={`videoSection ${currentSong ? 'hasVideo' : ''}`} slot="video">
     { currentSong ?
       <VideoPlayer
         songId={currentSong?.id as number}
@@ -40,7 +40,7 @@ const currentSong = await getCurrentSong(sanitizedSlug)
     overflow: hidden;
     width: 100%;
   }
-  .videoSection::after {
+  .videoSection.hasVideo::after {
     display: block;
     content: "";
     padding-top: 56.25%;
