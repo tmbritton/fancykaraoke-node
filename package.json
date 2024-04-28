@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "node dist/server/entry.mjs",
     "build": "astro check && astro build",
+    "precommit": "lint-staged",
     "preview": "astro preview",
     "astro": "astro",
     "getSongs": "node ./scraper.js 10000"
@@ -23,6 +24,16 @@
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.4.11",
-    "@types/qrcode": "^1.5.5"
+    "@types/qrcode": "^1.5.5",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0"
+  },
+  "lint-staged": {
+    "*.js|*.ts|*.tsx|*.astro": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
