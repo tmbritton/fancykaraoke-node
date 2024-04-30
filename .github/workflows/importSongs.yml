@@ -10,6 +10,7 @@ jobs:
     env:
       FK_DB_URL: ${{ secrets.FK_DB_URL }}
       FK_DB_TOKEN: ${{ secrets.FK_DB_TOKEN }}
+      FK_NONCE_SECRET: ${{ secrets.FK_NONCE_SECRET }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
