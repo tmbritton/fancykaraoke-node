@@ -1,12 +1,14 @@
-import generateNonce from '../../helpers/generateNonce';
 import { type APIRoute } from 'astro';
 import client from '../../db/client';
+import nonceGenerator from '../../helpers/NonceGenerator.js';
 
 export const POST: APIRoute = async ({ request }) => {
 	const requestNonce = request.headers.get('X-Nonce');
 	const requestTimestamp = request.headers.get('X-Timestamp');
 	if (requestNonce && requestTimestamp) {
-		if (requestNonce === generateNonce([requestTimestamp])) {
+		const generatedNonce = nonceGenerator.generateNonce([requestTimestamp.toString()]);
+		console.log(`Generated nonce: ${generatedNonce}`);
+		if (requestNonce === generatedNonce) {
 			try {
 				await client.sync();
 			} catch (e) {
