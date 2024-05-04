@@ -1,7 +1,9 @@
 import { type Party, selectSlugCount, insertParty, selectPartyBySlug } from "../models/partyModel";
 import { sanitizeString } from "../helpers/string";
+import client from "../db/client";
 
 export const createParty = async (name: string) => {
+  await client.sync();
   // Strip dangerous characters.
   const sanitizedName = sanitizeString(name);
   // Create sluggified version.
@@ -17,6 +19,7 @@ export const createParty = async (name: string) => {
   try {
     const result = await insertParty(sanitizedName, slug)
     if (result.rowsAffected === 1) {
+      await client.sync();
       return {created: true, slug}
     }
   } catch (e) {

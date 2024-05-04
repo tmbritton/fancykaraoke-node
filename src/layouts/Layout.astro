@@ -6,6 +6,9 @@ interface Props {
 const { title } = Astro.props;
 import '../styles/global.css';
 import HeadMeta from '../components/HeadMeta.astro'
+import client from '../db/client';
+
+await client.sync();
 ---
 
 <!doctype html>

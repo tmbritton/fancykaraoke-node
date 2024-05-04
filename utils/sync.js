@@ -12,8 +12,8 @@ const main = async () => {
       'X-Timestamp': timestamp
     }
   })
-  .then(res => /*console.log(res)*/()=>{})
-  .catch(e => /*console.error(e)*/()=>{});
+  .then(res => console.log(res?.data?.message))
+  .catch(e => console.error(e));
 };
 
 main()

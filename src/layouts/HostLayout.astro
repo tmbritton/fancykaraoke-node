@@ -2,6 +2,7 @@
 import HeadMeta from '../components/HeadMeta.astro';
 import HostFooter from '../components/HostFooter.astro';
 import HostHeader from '../components/HostHeader.astro';
+import client from '../db/client';
 
 interface Props {
 	title: string;
@@ -12,6 +13,7 @@ interface Props {
 const { title, partyId, hasCurrentSong } = Astro.props;
 import '../styles/global.css'
 
+await client.sync()
 ---
 <!doctype html>
 <html lang="en">

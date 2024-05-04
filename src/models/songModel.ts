@@ -24,7 +24,7 @@ export const selectSongById = async (id: string | number): Promise<Song | undefi
     console.error(e);
   }
 };
-
+/*
 export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[] | undefined> => {
   try {
     // Split the search string into keywords
@@ -39,10 +39,10 @@ export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[]
     console.error(e);
   }
 };
+*/
 
-/*
 export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[] | undefined> => {
-  //await client.sync()
+  const searchString = `${searchTerm}*`;
   try {
     const result = await client.execute({
       sql: `
@@ -50,19 +50,17 @@ export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[]
           id,
           title,
           artist,
-          youtube_id,
-          rank
+          youtube_id
         FROM song_fts
-        WHERE song_fts MATCH :searchTerm
+        WHERE song_fts MATCH :searchString 
         ORDER BY rank DESC
         LIMIT :limit
       `,
-      args: [searchTerm, limit]
+      args: {searchString, limit}
     });
-    console.log(result)
     return result.rows as unknown as Song[] | undefined;
   } catch (e) {
     console.error(e);
   }
 };
-*/
+
