@@ -15,7 +15,7 @@ const currentSong = await getCurrentSong(sanitizedSlug)
 
 <HostLayout
   title={`${party?.name} | Host Party | Fancy Karaoke`}
-  partyId={slug as string}
+  partySlug={slug as string}
   hasCurrentSong={!!currentSong}
 >
   <section class={`videoSection ${currentSong ? 'hasVideo' : ''}`} slot="video">
@@ -27,7 +27,7 @@ const currentSong = await getCurrentSong(sanitizedSlug)
         autoplay={0}
       />
     : 
-      <ScanToJoin id={party?.id as number} name={party?.name as string} />
+      <ScanToJoin slug={slug as string} name={party?.name as string} />
     }
   </section>
   <section class="queueSection" slot="side">

@@ -24,22 +24,6 @@ export const selectSongById = async (id: string | number): Promise<Song | undefi
     console.error(e);
   }
 };
-/*
-export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[] | undefined> => {
-  try {
-    // Split the search string into keywords
-    const keywords = searchTerm.split(/\s+/).map(keyword => `%${keyword.trim()}%`);
-    const result = await client.execute({
-      sql: "SELECT * FROM songs WHERE title LIKE :searchTerm OR artist LIKE :searchTerm LIMIT :limit",
-      args: { searchTerm: `%${searchTerm}%`, limit }
-    });
-
-    return result.rows as unknown as Song[] | undefined;;
-  } catch (e) {
-    console.error(e);
-  }
-};
-*/
 
 export const querySongs = async (searchTerm: string, limit = 10): Promise<Song[] | undefined> => {
   const searchString = `${searchTerm}*`;

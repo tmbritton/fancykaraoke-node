@@ -1,16 +1,16 @@
 ---
 import FooterQR from './FooterQR.astro';
 interface Props {
-	partyId: string;
+	partySlug: string;
   showQR: boolean;
 }
 
-const { partyId, showQR } = Astro.props;
+const { partySlug, showQR } = Astro.props;
 ---
 
 <footer class="host-footer">
-  <span class="partyId">Party Id: {partyId}</span>
-  <FooterQR slug={partyId} showQR={showQR} />
+  <span class="partyId">Party Id: {partySlug}</span>
+  <FooterQR slug={partySlug} showQR={showQR} />
 </footer>
 
 <style>

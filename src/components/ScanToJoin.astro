@@ -1,10 +1,10 @@
 ---
 interface Props {
-  id: number | string
+  slug: string
   name: string
 };
 
-const {id, name} = Astro.props;
+const {slug, name} = Astro.props;
 ---
 <div 
   class="scanToJoin"
@@ -15,7 +15,7 @@ const {id, name} = Astro.props;
   <p class="scanToJoin__text">
     Scan to join party, search for songs, and add them to the queue!
   </p>
-  <img class="qr" width="500" height="500" src=`/qr.svg?partyid=${id}` alt=`Join Party ${name}` />
+  <img class="qr" width="500" height="500" src=`/qr.svg?partyid=${slug}` alt=`Join Party ${name}` />
 </div>
 
 <style>

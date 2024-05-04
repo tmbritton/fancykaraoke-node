@@ -3,12 +3,12 @@ import SkipSongButton from "./SkipSongButton.astro";
 import { getQueueCountByPartySlug } from '../controllers/queueController';
 
 interface Props {
-  partyId: string
+  partySlug: string
 };
 
-const { partyId } = Astro.props;
+const { partySlug } = Astro.props;
 
-const count = await getQueueCountByPartySlug(partyId);
+const count = await getQueueCountByPartySlug(partySlug);
 const showButton = count && count > 0;
 ---
 

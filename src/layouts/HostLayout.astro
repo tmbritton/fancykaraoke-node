@@ -6,11 +6,11 @@ import client from '../db/client';
 
 interface Props {
 	title: string;
-	partyId: string;
+	partySlug: string;
 	hasCurrentSong: boolean;
 }
 
-const { title, partyId, hasCurrentSong } = Astro.props;
+const { title, partySlug, hasCurrentSong } = Astro.props;
 import '../styles/global.css'
 
 await client.sync()
@@ -19,7 +19,7 @@ await client.sync()
 <html lang="en">
 	<HeadMeta title={title} />
 	<body hx-boost>
-		<HostHeader partyId={partyId} />
+		<HostHeader partySlug={partySlug} />
 		<main class="hostMain">
 			<div class="videoPane">
 				<slot name="video"/>
@@ -28,7 +28,7 @@ await client.sync()
 				<slot name="side" />
 			</div>
 		</main>
-		<HostFooter partyId={partyId} showQR={hasCurrentSong} />
+		<HostFooter partySlug={partySlug} showQR={hasCurrentSong} />
 		<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
 	</body>
 </html>
