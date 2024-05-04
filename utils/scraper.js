@@ -55,6 +55,8 @@ const main = async () => {
   const count = args[0];
   const start = await getCount() + 1;
   const songList = await getKaraokeData(start, count);
+  let songsTableCount = 0;
+  let ftsTableCount = 0;
   
   console.log(`Songs loaded: ${songList.length}`);
 
@@ -79,6 +81,46 @@ const main = async () => {
       }
     } catch (e) {
       error++;
+    }
+  }
+
+  try {
+    const resultz = await client.execute({
+      sql: "SELECT COUNT(*) AS count FROM songs",
+      args: []
+    });
+    songsTableCount = resultz?.rows?.[0]?.count;
+    console.log(`Songs count: ${songsTableCount}`);
+  } catch (e) {
+    console.error(e);
+  }
+
+  try {
+    const result3 = await client.execute({
+      sql: "SELECT COUNT(*) AS count FROM song_fts",
+      args: []
+    });
+    ftsTableCount = result3?.rows?.[0]?.count;
+    console.log(`Virtual Table songs count: ${songsTableCount}`);
+  } catch (e) {
+    console.error(e);
+  }
+
+  if (songsTableCount > ftsTableCount) {
+    // Insert imported songs into fts virtual table.
+    try {
+      await client.execute({
+        sql: `
+          INSERT INTO song_fts (id, title, artist, uploader, youtube_id, created_at)
+          SELECT s.id, s.title, s.artist, s.uploader, s.youtube_id, s.created_at
+          FROM songs s
+          LEFT JOIN song_fts f ON s.id = f.id
+          WHERE f.id IS NULL;`,
+        args: []
+        })
+      console.log(`${songsTableCount - ftsTableCount} loaded into fts virtual table`)
+    } catch (e) {
+      console.error(`Error inserting imported songs into song_fts table: ${e}`)
     }
   }
 
