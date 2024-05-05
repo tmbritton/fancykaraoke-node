@@ -49,4 +49,4 @@ COPY --from=build /app /app
 EXPOSE 4321
 ENV HOST="0.0.0.0"
 #CMD [ "npm", "run", "start" ]
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
