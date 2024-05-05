@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import { createParty } from '../../controllers/partyController';
+import PubSub from '../../helpers/pubSub'
 let error: Error;
 
 if (Astro.request.method === "POST") {
@@ -29,6 +30,11 @@ if (Astro.request.method === "POST") {
     }
   }
 }
+
+if (Astro.request.method === "GET") {
+  PubSub.publish('createPartyFormLoad')
+}
+
 ---
 
 <Layout title="Create a party | Fancy Karaoke">

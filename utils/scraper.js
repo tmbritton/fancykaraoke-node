@@ -101,7 +101,7 @@ const main = async () => {
       args: []
     });
     ftsTableCount = result3?.rows?.[0]?.count;
-    console.log(`Virtual Table songs count: ${songsTableCount}`);
+    console.log(`Virtual Table songs count: ${ftsTableCount}`);
   } catch (e) {
     console.error(e);
   }

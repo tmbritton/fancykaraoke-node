@@ -5,7 +5,7 @@ export interface Subscription {
   priority: number;
 }
 
-type SubscriptionTypes = 'queueUpdated';
+type SubscriptionTypes = 'queueUpdated' | 'createPartyFormLoad' | 'partyCreated';
 
 type Dispatch = {type: SubscriptionTypes, payload: any}
 
@@ -53,7 +53,7 @@ const PubSub = (() => {
    * @param type Type of event.
    * @param payload
    */
-  const publish = (type: SubscriptionTypes, payload: Record<string, string>): void => {
+  const publish = (type: SubscriptionTypes, payload?: Record<string, string>): void => {
     if (subscriptions.hasOwnProperty(type)) {
       subscriptions[type].forEach((subscription) => subscription.callback(payload));
     }
