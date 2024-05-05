@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "getSongs": "node ./utils/scraper.js 10000",
-    "syncDb": "node ./utils/sync.js"
+    "syncDb": "node ./utils/sync.js",
+    "syncLocalDb": "node ./utils/syncLocalDb.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.2",

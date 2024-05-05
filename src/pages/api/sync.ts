@@ -1,5 +1,5 @@
 import { type APIRoute } from 'astro';
-import client from '../../db/client';
+import client from '../../db/client.js';
 import nonceGenerator from '../../helpers/NonceGenerator.js';
 
 export const POST: APIRoute = async ({ request }) => {
