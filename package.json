@@ -2,6 +2,7 @@
   "name": "fancykaraoke-node",
   "type": "module",
   "version": "0.0.1",
+  "engine": "20.12.2",
   "scripts": {
     "dev": "astro dev",
     "start": "node dist/server/entry.mjs",
@@ -14,11 +15,11 @@
     "syncLocalDb": "node ./utils/syncLocalDb.js"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.2",
+    "@astrojs/check": "^0.5.10",
     "@astrojs/node": "^8.2.0",
     "@libsql/client": "^0.4.0-pre.5",
     "@types/youtube-player": "^5.5.11",
-    "astro": "^4.7.1",
+    "astro": "4.3.5",
     "axios": "^1.6.8",
     "cheerio": "1.0.0-rc.12",
     "qrcode": "^1.5.3",
