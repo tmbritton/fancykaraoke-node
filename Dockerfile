@@ -35,18 +35,10 @@ RUN npm prune --omit=dev
 # Final stage for app image
 FROM base
 
-# Copy entrypoint file
-COPY entrypoint.sh /app/entrypoint.sh
-
-# Make the entrypoint script executable
-RUN chmod +x /app/entrypoint.sh
-
 # Copy built application
 COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 4321
 ENV HOST="0.0.0.0"
-#CMD [ "npm", "run", "start" ]
-#ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["sh", "-c", "npm run syncLocalDb && npm run start"]
