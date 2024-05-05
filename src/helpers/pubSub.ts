@@ -5,7 +5,7 @@ export interface Subscription {
   priority: number;
 }
 
-type SubscriptionTypes = 'queueUpdated' | 'createPartyFormLoad' | 'partyCreated';
+type SubscriptionTypes = 'queueUpdated' | 'partyCreated';
 
 type Dispatch = {type: SubscriptionTypes, payload: any}
 
