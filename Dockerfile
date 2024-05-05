@@ -32,7 +32,6 @@ RUN npm run build
 # Remove development dependencies
 RUN npm prune --omit=dev
 
-
 # Final stage for app image
 FROM base
 
@@ -49,4 +48,4 @@ COPY --from=build /app /app
 EXPOSE 4321
 ENV HOST="0.0.0.0"
 #CMD [ "npm", "run", "start" ]
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
