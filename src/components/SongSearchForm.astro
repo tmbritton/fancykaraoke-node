@@ -18,6 +18,7 @@ const { partySlug, userName } = Astro.props;
       name="search"
       id="searchInput"
       placeholder="Search for song by artist or title"
+      autocomplete="off"
       hx-post="/partials/song-search" 
       hx-trigger="input changed delay:200ms, search" 
       hx-target="#searchResults" 

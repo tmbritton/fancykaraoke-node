@@ -21,7 +21,8 @@ const {method, action, fieldLabel, placeholder, buttonLabel, partyId} = Astro.pr
       name="party-name"
       placeholder={placeholder}
       id="party-id"
-      required minlength="2"
+      required
+      minlength="2"
       value={partyId || ''}
       readonly={partyId ? 'readonly' : null}
     />
@@ -33,7 +34,7 @@ const {method, action, fieldLabel, placeholder, buttonLabel, partyId} = Astro.pr
 
   <div style={{display: 'none'}}>
     <label for="shazbot">Enter your email address</label>
-    <input type="text" name="email-shazbot" id="email" autocomplete="off"/>
+    <input type="text" name="email" id="email" autocomplete="off" />
   </div>
 
   <div class="button-wrap">
@@ -44,7 +45,7 @@ const {method, action, fieldLabel, placeholder, buttonLabel, partyId} = Astro.pr
       name="submit"
     >
       {buttonLabel}
-    </Button
+    </Button>
   </div>
 </form>
 
