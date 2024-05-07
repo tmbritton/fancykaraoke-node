@@ -11,7 +11,7 @@ export async function GET({ request }: {
     return new Response(null, { status: 404 });
   }
 
-  const svgUrl = `${url.protocol}//${url.hostname}${url.hostname === 'localhost' ? `:${url.port}` : ''}/attend/${makeUrlSafe(partyId)}`
+  const svgUrl = `${url.protocol}//${url.hostname}${url.hostname === 'localhost' ? `:${url.port}` : ''}/join?party-id=${makeUrlSafe(partyId)}`
   try {
     const QRdata = await QRCode.toString(svgUrl, {
       errorCorrectionLevel: 'H',

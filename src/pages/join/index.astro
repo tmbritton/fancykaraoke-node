@@ -1,17 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-import PartyIdForm from '../components/PartyIdForm.astro';
-import { selectPartyBySlug } from '../models/partyModel';
-import { sanitizeString } from '../helpers/string'
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import PartyIdForm from '../../components/PartyIdForm.astro';
+import { selectPartyBySlug } from '../../models/partyModel';
+import { sanitizeString } from '../../helpers/string'
 let error: Error;
+const userName = Astro.cookies.get('fk-name');
+const sanitizedUserName = userName?.value ? sanitizeString(userName?.value) : null;
+const partyId = Astro.url.searchParams.get('party-id');
+const santizedPartyId = partyId ? sanitizeString(partyId) : null;
 
 if (Astro.request.method === "POST") {
   try {
     const data = await Astro.request.formData();
-
     // Honeypot bot protection
-    const honeypot = data.get('email-shazbot');
+    const honeypot = data.get('email');
     if (honeypot) {
       throw new Error(`Honeypot | ${honeypot}`)
     }
@@ -19,12 +22,10 @@ if (Astro.request.method === "POST") {
     // Proceed if honeypot is not tripped
     const partyName = data.get("party-name") as string;
     const attendeeName = data.get('attendee-name') as string;
-
     const result = partyName ? await selectPartyBySlug(partyName) : null;
-
     if (result && attendeeName) {
       Astro.cookies.set('fk-name', sanitizeString(attendeeName));
-      return Astro.redirect(`/attend/${result?.slug}/search`);
+      return Astro.redirect(`/attend/${result?.slug}/queue`);
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -45,6 +46,7 @@ if (Astro.request.method === "POST") {
         fieldLabel="Party ID"
         placeholder="Enter Party ID"
         buttonLabel="Join Party!"
+        partyId={santizedPartyId ? santizedPartyId : undefined}
       >
         <label for="attendee">Your Name</label>
         <input
@@ -53,6 +55,7 @@ if (Astro.request.method === "POST") {
           name="attendee-name"
           placeholder="Enter Your Name"
           class="name-input"
+          value={sanitizedUserName}
         />
       </PartyIdForm>
     </Card>

@@ -10,6 +10,12 @@ input {
     outline: 2px solid var(--white);
     outline-offset: -2px;
   }
+
+  &:disabled, &:read-only {
+    border-bottom: 0 none;
+    color: var(--grey03);
+    cursor: not-allowed;
+  }
 }
 
 label {

@@ -7,15 +7,24 @@ interface Props {
   fieldLabel: string
   placeholder: string
   buttonLabel: string
+  partyId?: string
 }
 
-const {method, action, fieldLabel, placeholder, buttonLabel} = Astro.props
+const {method, action, fieldLabel, placeholder, buttonLabel, partyId} = Astro.props
 ---
 
 <form method={method} action={action}>
   <div class="field-wrap">
     <label for="party-id">{fieldLabel}</label>
-    <input type="text" name="party-name" placeholder={placeholder} id="party-id" required minlength="2" />
+    <input
+      type="text"
+      name="party-name"
+      placeholder={placeholder}
+      id="party-id"
+      required minlength="2"
+      value={partyId || ''}
+      readonly={partyId ? 'readonly' : null}
+    />
   </div>  
   
   <div class="field-wrap">
@@ -24,7 +33,7 @@ const {method, action, fieldLabel, placeholder, buttonLabel} = Astro.props
 
   <div style={{display: 'none'}}>
     <label for="shazbot">Enter your email address</label>
-    <input type="text" name="email-shazbot" id="email-shazbot" />
+    <input type="text" name="email-shazbot" id="email" autocomplete="off"/>
   </div>
 
   <div class="button-wrap">
