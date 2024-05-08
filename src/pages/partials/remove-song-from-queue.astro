@@ -1,0 +1,27 @@
+---
+import { removeSongFromQueue } from "../../controllers/queueController";
+import { sanitizeString } from "../../helpers/string";
+import SongQueue from "../../components/SongQueue.astro";
+import { getPartySlugByQueueItemId } from '../../controllers/partyController';
+import PubSub from "../../helpers/pubSub";
+export const partial = true;
+
+const data = await Astro.request.formData();
+const id = sanitizeString(data.get('id') as string);
+const slug = await getPartySlugByQueueItemId(id) as string;
+
+if (Astro.request.method === "POST") {
+  if (id) {
+    try {
+      await removeSongFromQueue(id);
+      PubSub.publish('queueUpdated', {partySlug: slug})
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
+    }
+  }
+}
+---
+
+<SongQueue slug={slug} userType="HOST" />

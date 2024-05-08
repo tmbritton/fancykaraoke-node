@@ -4,9 +4,10 @@ import QueueItem from './QueueItem.astro'
 
 interface Props {
   slug: string,
+  userType: 'HOST' | 'ATTENDEE'
 }
 
-const { slug } = Astro.props
+const { slug, userType } = Astro.props
 
 const queue = await getQueueBySlug(slug)
 
@@ -18,7 +19,7 @@ const filteredQueue = queue.filter((song, index) => {
 <ol
   class="songQueue"
   id="songQueue"
-  hx-get=`/partials/updated-queue?slug=${slug}`
+  hx-get=`/partials/updated-queue?slug=${slug}&user-type=${userType}`
   hx-trigger="queueUpdated from:body"
   >
   {filteredQueue.map((item, index) =>
@@ -27,6 +28,8 @@ const filteredQueue = queue.filter((song, index) => {
       addedBy={item.added_by}
       priority={item.priority}
       position={index + 1}
+      userType={userType}
+      queueItemId={item.id}
     />
   )}
 </ol>

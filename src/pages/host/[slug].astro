@@ -31,7 +31,7 @@ const currentSong = await getCurrentSong(sanitizedSlug)
     }
   </section>
   <section class="queueSection" slot="side">
-    <SongQueue slug={sanitizedSlug}/>
+    <SongQueue slug={sanitizedSlug} userType='HOST'/>
   </section>
 </HostLayout>
 

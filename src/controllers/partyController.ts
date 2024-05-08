@@ -1,4 +1,5 @@
 import { type Party, selectSlugCount, insertParty, selectPartyBySlug } from "../models/partyModel";
+import { selectPartySlugByQueueId } from "../models/queueModel";
 import { sanitizeString } from "../helpers/string";
 import PubSub from "../helpers/pubSub";
 
@@ -31,4 +32,10 @@ export const getPartyBySlug = async (slug: string): Promise<Party | null> => {
   const sanitizedSlug = sanitizeString(slug)
   const result = await selectPartyBySlug(sanitizeString(sanitizedSlug))
   return result as Party
+}
+
+export const getPartySlugByQueueItemId = async (id: number | string): Promise<string | null> => {
+  const sanitizedId = sanitizeString(id as string);
+  const result = await selectPartySlugByQueueId(id as number);
+  return result as string;
 }
