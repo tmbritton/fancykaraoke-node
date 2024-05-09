@@ -28,6 +28,7 @@ const song = await getSongById(songId)
       hx-confirm={`Are you sure you want to remove ${song?.title} from the queue?`}
       value={queueItemId}
       name="id" 
+      title={`Remove ${song?.title} from the queue?`}
     >
       &times;
     </button>
