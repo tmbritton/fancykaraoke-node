@@ -13,7 +13,7 @@ const {songId, addedBy, position, userType, queueItemId, isPlaying } = Astro.pro
 const song = await getSongById(songId)
 ---
 
-<li class="queueItem">
+<li class={`queueItem${!isPlaying ? ' sortable' : ''}`}>
   {isPlaying ? 
     <span class="songPosition nowPlaying" title="Now Playing!">
       &#9658;
@@ -49,13 +49,25 @@ const song = await getSongById(songId)
   margin: 0 -1.5rem;
   color: var(--white);
   align-items: center;
+  border: 1px solid var(--grey05);
   &:nth-child(even) {
     background-color: var(--grey04);
+    border: 1px solid var(--grey04);
+  }
+  &:hover {
+    cursor: grab;
+    border: 1px solid var(--grey01);
   }
   .songPosition {
     margin-right: 1.5rem;
     font-size:2rem;
     min-width: 2.25rem;
+    &:hover {
+      &::after {
+        opacity: 1;
+        content: '↕';
+      }
+    }
   }
   .songInfo {
     display: flex;
