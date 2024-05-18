@@ -22,14 +22,23 @@ const filteredQueue = queue.filter((song, index) => {
   hx-get=`/partials/updated-queue?slug=${slug}&user-type=${userType}`
   hx-trigger="queueUpdated from:body"
   >
+  <QueueItem 
+    songId={queue[0].song_id}
+    addedBy={queue[0].added_by}
+    position={0}
+    userType={userType}
+    queueItemId={queue[0].id}
+    isPlaying={true}
+  />
+
   {filteredQueue.map((item, index) =>
     <QueueItem 
       songId={item.song_id}
       addedBy={item.added_by}
-      priority={item.priority}
       position={index + 1}
       userType={userType}
       queueItemId={item.id}
+      isPlaying={false}
     />
   )}
 </ol>

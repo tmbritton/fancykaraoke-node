@@ -14,3 +14,21 @@ body {
   background-color: var(--grey05);
   height: 100vh;
 }
+
+@keyframes colorAnimation {
+  0% {
+    color: var(--white);
+  }
+  25% {
+    color: var(--pink);
+  }
+  50% {
+    color: var(--white);
+  }
+  75% {
+    color: var(--magenta);
+  }
+  100% {
+    color: var(--white);
+  }
+}

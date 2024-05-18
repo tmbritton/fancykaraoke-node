@@ -8,7 +8,7 @@ const {slug, name} = Astro.props;
 ---
 <div 
   class="scanToJoin"
-  hx-get="/partials/current-video"
+  hx-get={`/partials/current-video?slug=${slug}`}
   hx-trigger="queueUpdated from:body"
   hx-swap="outerHTML"
 >

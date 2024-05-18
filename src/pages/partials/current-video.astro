@@ -4,8 +4,16 @@ import { getCurrentSong } from "../../controllers/queueController";
 import { type CurrentSong } from "../../models/songModel";
 import VideoPlayer from "../../components/VideoPlayer.astro";
 export const partial = true;
-const data = await Astro.request.formData();
-const slug = sanitizeString(data.get('slug') as string);
+/*
+let data;
+try {
+  data = await Astro.request.formData(); 
+} catch(e) {
+  console.error(e)
+}
+*/
+//const slug = sanitizeString(data.get('slug') as string);
+const slug = sanitizeString(Astro.url.searchParams.get('slug') as string) || '';
 let newSong: CurrentSong | undefined = undefined;
 
 if (Astro.request.method === "GET") {

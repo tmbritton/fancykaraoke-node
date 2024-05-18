@@ -3,24 +3,30 @@ import { getSongById } from '../controllers/songController'
 interface Props {
   songId: number,
   addedBy: string,
-  priority: number,
   position: number,
   userType: 'HOST' | 'ATTENDEE',
   queueItemId: number
+  isPlaying: boolean
 }
 
-const {songId, addedBy, priority, position, userType, queueItemId } = Astro.props
+const {songId, addedBy, position, userType, queueItemId, isPlaying } = Astro.props
 const song = await getSongById(songId)
 ---
 
 <li class="queueItem">
-  <span class="songPosition">{position}</span>
+  {isPlaying ? 
+    <span class="songPosition nowPlaying" title="Now Playing!">
+      &#9658;
+    </span>
+    :
+     <span class="songPosition">{position}</span> 
+  }
   <div class="songInfo">
     <span class="queueSongTitle">Title: <strong>{song?.title}</strong></span>
     <span class="queueSongArtist">Artist: <strong>{song?.artist}</strong></span>
     <span class="queueSongPeformer">Added By: <strong>{addedBy}</strong></span>
   </div>
-  {userType === 'HOST' &&
+  {userType === 'HOST' && !isPlaying &&
     <button
       class="removeSongButton"
       hx-post="/partials/remove-song-from-queue"
@@ -50,6 +56,9 @@ const song = await getSongById(songId)
     margin-right: 1.5rem;
     font-size:2rem;
     min-width: 2.25rem;
+    &.nowPlaying {
+      animation: colorAnimation 5s infinite;
+    }
   }
   .songInfo {
     display: flex;
@@ -67,6 +76,7 @@ const song = await getSongById(songId)
     &:hover {
       cursor: pointer;
       transform: scale(120%);
+      color: var(--accent);
     }
     &:active {
       color: var(--grey02);
