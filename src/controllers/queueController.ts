@@ -44,7 +44,7 @@ export const removeSongFromQueue = async (queueItemId: string | number) => {
 }
 
 export const getQueueCountByPartySlug = async (slug: string) => {
-  const sanitizedSlug = sanitizeString(slug);
-
-  return await selectQueueCountByPartySlug(sanitizedSlug);
+  const sanitizedSlug = sanitizeString(slug); 
+  const count = await selectQueueCountByPartySlug(sanitizedSlug);
+  return count; 
 }

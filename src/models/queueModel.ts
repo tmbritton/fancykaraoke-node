@@ -141,7 +141,6 @@ export const selectQueueCountByPartySlug = async (slug: string): Promise<number 
       `,
       args: [slug]
     })
-
     return result?.rows?.[0]?.['COUNT(*)'] as number;
   } catch(e) {
     console.error(e)

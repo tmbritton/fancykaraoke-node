@@ -40,10 +40,12 @@ const currentSong = await getCurrentSong(sanitizedSlug)
     position: relative;
     overflow: hidden;
     width: 100%;
-  }
-  .videoSection.hasVideo::after {
-    display: block;
-    content: "";
-    padding-top: 56.25%;
+    &:has(iframe) {
+      &::after {
+        display: block;
+        content: "";
+        padding-top: 56.25%;  
+      }
+    }
   }
 </style>

@@ -14,7 +14,7 @@ const showButton = count && count > 0;
 
 <header class="site-header">
 	<h1><a href="/">Fancy Karaoke</a></h1>
-  <SkipSongButton showButton={!!showButton} />
+  <SkipSongButton showButton={showButton as boolean} slug={partySlug} />
 </header>
 
 <style>

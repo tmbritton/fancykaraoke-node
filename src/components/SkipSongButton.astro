@@ -3,18 +3,19 @@ import Button from "./Button.astro"
 
 interface Props {
   showButton: boolean
+  slug: string
 };
 
-const { showButton } = Astro.props;
+const { showButton, slug } = Astro.props;
 ---
 <div
   id="skip-video-wrap"
-  hx-get="/partials/skip-button"
+  hx-get={`/partials/skip-button?slug=${slug}`}
   hx-trigger="queueUpdated from:body"
   hx-swap="outerHTML"
   hx-include="[name='slug']"
 >
-  {showButton &&
+  {showButton ? 
     <Button
       id="skip-video-button"
       className="skip-button"
@@ -29,5 +30,6 @@ const { showButton } = Astro.props;
     >
       Skip current song &rarr; 
     </Button>
+    : null
   }
 </div>
