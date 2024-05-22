@@ -5,7 +5,7 @@
   "engine": "20.12.2",
   "scripts": {
     "dev": "astro dev",
-    "start": "node dist/server/entry.mjs",
+    "start": "astro dev",
     "build": "astro check && astro build",
     "precommit": "lint-staged",
     "preview": "astro preview",
