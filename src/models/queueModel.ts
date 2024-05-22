@@ -90,7 +90,6 @@ export const hideQueueItem = async (id: number) => {
       `,
       args: [id]
     })
-    await client.sync()
     return result.rowsAffected
   } catch (e) {
     console.error(e)

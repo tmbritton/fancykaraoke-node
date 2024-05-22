@@ -31,4 +31,5 @@ if (Astro.request.method === "GET") {
 
 }
 ---
+{' '}
 { newSong ? <VideoPlayer songId={newSong?.id} partySlug={slug} queueItemId={newSong.queue_id} autoplay={0}/> : ''}

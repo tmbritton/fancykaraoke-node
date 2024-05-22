@@ -1,10 +1,10 @@
 ---
+export const partial = true;
 import { sanitizeString } from "../../helpers/string";
 import { removeSongFromQueue, getCurrentSong } from "../../controllers/queueController";
 import { type CurrentSong } from "../../models/songModel";
 import VideoPlayer from "../../components/VideoPlayer.astro";
 import ScanToJoin from "../../components/ScanToJoin.astro";
-export const partial = true;
 const data = await Astro.request.formData();
 const id = sanitizeString(data.get('queueItemId') as string);
 const slug = sanitizeString(data.get('slug') as string);
@@ -26,6 +26,7 @@ if (Astro.request.method === "POST") {
 
 }
 ---
+{' '}
 { newSong ? 
   <VideoPlayer songId={newSong?.id} partySlug={slug} queueItemId={newSong.queue_id} autoplay={1}/>
   : 

@@ -1,9 +1,9 @@
 ---
+export const partial = true;
 import SongQueue from "../../components/SongQueue.astro"
 
 const slug = Astro.url.searchParams.get('slug') as string;
 const userType = Astro.url.searchParams.get('user-type') as 'HOST' | 'ATTENDEE';
-export const partial = true;
 ---
-
+{' '}
 <SongQueue slug={slug} userType={userType} />
