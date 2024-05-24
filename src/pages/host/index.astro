@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
+import Button from '../../components/Button.astro';
 import { createParty } from '../../controllers/partyController';
 let error: Error;
 
@@ -44,12 +45,14 @@ if (Astro.request.method === "POST") {
           <input type="text" name="email-shazbot" id="email-shazbot" />
         </div>
         <br />
-        <button
-          class="button"
+        <Button
+          className="button"
           type="submit"
+          id="host-submit"
+          name="host-submit"
         >
           Create party!
-        </button>
+        </Button>
       </form>
     </Card>
 	</div>
@@ -59,5 +62,8 @@ if (Astro.request.method === "POST") {
   .create-party-page {
     max-width: 600px;
     margin: 0 auto;
+  }
+  input[name="party-name"] {
+    margin-bottom: 1.5rem;
   }
 </style>
