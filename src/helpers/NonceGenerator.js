@@ -3,8 +3,6 @@ import crypto from 'crypto';
 class NonceGenerator {
   constructor() {
     this.secret = process.env.FK_NONCE_SECRET;
-    //console.log(`Secret: ${process.env.FK_NONCE_SECRET} Length: ${process.env.FK_NONCE_SECRET.length}`);
-    //this.secret = 'foo';
     if (!this.secret) {
       throw new Error('Secret is not set. Please provide a valid secret.');
     }

@@ -1,5 +1,7 @@
 ---
 import Button from './Button.astro'
+import HoneypotField from './HoneypotField.astro'
+import NonceGenerator from '../helpers/NonceGenerator'
 
 interface Props {
   method: 'POST' | 'GET'
@@ -8,9 +10,12 @@ interface Props {
   placeholder: string
   buttonLabel: string
   partyId?: string
+  partyIdError?: boolean
 }
 
-const {method, action, fieldLabel, placeholder, buttonLabel, partyId} = Astro.props
+const {method, action, fieldLabel, placeholder, buttonLabel, partyId, partyIdError = false} = Astro.props
+const ts = Date.now();
+const formNonce = NonceGenerator.generateNonce([ts]);
 ---
 
 <form method={method} action={action}>
@@ -25,18 +30,20 @@ const {method, action, fieldLabel, placeholder, buttonLabel, partyId} = Astro.pr
       minlength="2"
       value={partyId || ''}
       readonly={partyId ? 'readonly' : null}
+      class={`${partyIdError ? 'error' : ''}`}
     />
+    {partyIdError ? 
+      <label for="party-id" class="error">There is no party with that id.</label>
+    : null}
+    <input type="hidden" name="timestamp" value={ts} />
+    <input type="hidden" name="nonce" value={formNonce} />
   </div>  
   
   <div class="field-wrap">
     <slot></slot>
   </div>
 
-  <div style={{display: 'none'}}>
-    <label for="shazbot">Enter your email address</label>
-    <input type="text" name="email" id="email" autocomplete="off" />
-  </div>
-
+  <HoneypotField />
   <div class="button-wrap">
     <Button
       className="submit-button"

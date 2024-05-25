@@ -2,35 +2,44 @@
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import PartyIdForm from '../../components/PartyIdForm.astro';
+import BotError from '../../components/BotError.astro';
 import { selectPartyBySlug } from '../../models/partyModel';
 import { sanitizeString } from '../../helpers/string'
-let error: Error;
+import botProtection, {type ERROR_TYPE} from '../../helpers/botProtection';
+import { imageConfig } from 'astro:assets';
+let error: ERROR_TYPE = 'NONE';
 const userName = Astro.cookies.get('fk-name');
 const sanitizedUserName = userName?.value ? sanitizeString(userName?.value) : null;
 const partyId = Astro.url.searchParams.get('party-id');
 const santizedPartyId = partyId ? sanitizeString(partyId) : null;
+let noPartyError = false;
+let noNameError = false;
 
 if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    // Honeypot bot protection
-    const honeypot = data.get('email');
-    if (honeypot) {
-      throw new Error(`Honeypot | ${honeypot}`)
-    }
+  const data = await Astro.request.formData();
+  error = botProtection(data);
 
-    // Proceed if honeypot is not tripped
-    const partyName = data.get("party-name") as string;
-    const attendeeName = data.get('attendee-name') as string;
-    const result = partyName ? await selectPartyBySlug(partyName) : null;
-    if (result && attendeeName) {
-      Astro.cookies.set('fk-name', sanitizeString(attendeeName));
-      return Astro.redirect(`/attend/${result?.slug}/queue`);
-    }
-  } catch (err) {
-    if (err instanceof Error) {
-      console.error(err.message);
-      error = err;
+  // Proceed if no bot errors are triggered
+  if (error === 'NONE') {
+    try {
+      const partyName = data.get("party-name") as string;
+      const attendeeName = data.get('attendee-name') as string;
+      const result = partyName ? await selectPartyBySlug(partyName) : null;
+      if (!result) {
+        noPartyError = true;
+      }
+      if (!attendeeName) {
+        noNameError = true;
+      }
+      if (result && attendeeName) {
+        Astro.cookies.set('fk-name', sanitizeString(attendeeName));
+        return Astro.redirect(`/attend/${result?.slug}/queue`);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+        error = 'DATABASE';
+      }
     }
   }
 }
@@ -40,24 +49,33 @@ if (Astro.request.method === "POST") {
 <Layout title="Fancy Karaoke">
 	<main>
     <Card title="Join Party">
-      <PartyIdForm 
-        method='POST'
-        action="/join"
-        fieldLabel="Party ID"
-        placeholder="Enter Party ID"
-        buttonLabel="Join Party!"
-        partyId={santizedPartyId ? santizedPartyId : undefined}
-      >
-        <label for="attendee">Your Name</label>
-        <input
-          type="text"
-          id="attendee"
-          name="attendee-name"
-          placeholder="Enter Your Name"
-          class="name-input"
-          value={sanitizedUserName}
-        />
-      </PartyIdForm>
+      { error === 'HONEYPOT' || error === 'NONCE' || error === 'TIMESTAMP' ?
+        <BotError error={error} />
+      :      
+        <PartyIdForm 
+          method='POST'
+          action="/join"
+          fieldLabel="Party ID"
+          placeholder="Enter Party ID"
+          buttonLabel="Join Party!"
+          partyId={santizedPartyId ? santizedPartyId : undefined}
+          partyIdError={noPartyError}
+        >
+          <label for="attendee">Your Name</label>
+          <input
+            type="text"
+            id="attendee"
+            name="attendee-name"
+            placeholder="Enter Your Name"
+            class={`name-input ${noNameError ? ' error' : ''}`}
+            value={sanitizedUserName}
+            required
+          />
+          {noNameError ? 
+            <label for="attendee" class="error">Please enter some sort of name / alias to proceed.</label>
+          : null}
+        </PartyIdForm>
+      }
     </Card>
   </main>
 </Layout>

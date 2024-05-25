@@ -5,6 +5,12 @@ input {
   border-bottom: 1px solid var(--grey03);
   padding: .5rem;
   color: var(--white);
+  &.error {
+    border-bottom: 1px solid red;
+    &:focus-visible {
+      outline: 2px solid red;  
+    }
+  }
 
   &:focus-visible {
     outline: 2px solid var(--white);
@@ -21,4 +27,7 @@ input {
 label {
   font-size: .75rem;
   color: var(--white);
+  &.error {
+    color: red;
+  }
 }
