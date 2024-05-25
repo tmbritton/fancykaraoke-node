@@ -3,31 +3,58 @@ import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import Button from '../../components/Button.astro';
 import { createParty } from '../../controllers/partyController';
-let error: Error;
+import NonceGenerator from '../../helpers/NonceGenerator';
+
+let error: 'HONEYPOT' | 'NONCE' | 'DATABASE' | 'TIMESTAMP' | 'NONE' = 'NONE'
+const ts = Date.now();
+const formNonce = NonceGenerator.generateNonce([ts]);
 
 if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
+  const data = await Astro.request.formData();
 
-    // Honeypot bot protection
-    const honeypot = data.get('email-shazbot');
-    if (honeypot) {
-      throw new Error(`Honeypot | ${honeypot}`)
+  const honeypot = data.get('email');
+  if (honeypot) {
+    error = 'HONEYPOT';
+  }
+
+  if (error === 'NONE') {
+    const nonce = data.get('nonce');
+    const timestamp = data.get('timestamp');
+
+    const checkNonce = NonceGenerator.generateNonce([timestamp]);
+    if (nonce !== checkNonce) {
+      error = 'NONCE';
     }
+  }
 
-    // Proceed if honeypot is not tripped
-    const partyName = data.get("party-name");
-    const result =  await createParty(partyName as string);
+  if (error === 'NONE') {
+    const timestamp = data.get('timestamp') as unknown as number;
 
-    if (result?.created) {
-      return Astro.redirect(`/host/${result?.slug}`)
+    // Validate user has spent at least three seconds on the form.
+    if (Date.now() - timestamp < 3000)  {
+      error = 'TIMESTAMP';
     }
+  }
 
-  } catch (err) {
-    if (err instanceof Error) {
-      console.error(err.message);
-      error = err;
+  // Proceed if no errors are triggered
+  if (error === 'NONE') {
+    const partyName = data.get('party-name');
+    try {
+      const result = await createParty(partyName as string);
+
+      if (result?.created) {
+        const slugNonce = NonceGenerator.generateNonce([result.slug]);
+        Astro.cookies.set('fk-host-nonce', slugNonce);
+        return Astro.redirect(`/host/${result.slug}`);
+      }
+    } catch(err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+        error = 'DATABASE';
+      }
     }
+  } else {
+    console.warn(`Bot validation triggered: ${error}`)
   }
 }
 
@@ -36,14 +63,21 @@ if (Astro.request.method === "POST") {
 <Layout title="Create a party | Fancy Karaoke">
 	<div class="create-party-page">
     <Card title='Create Party'>
-      <form method="post" action="/host">
+      { error === 'HONEYPOT' || error === 'NONCE' || error === 'TIMESTAMP' ?
+        (<div class={`botError ${error}`}>
+          <h2>Sorry! You're triggered our bot protection. We think you're a 🤖</h2>
+        </div>)
+      :
+      (<form method="post" action="/host">
         <label for="party-name">Party Name</label>
         <input type="text" name="party-name" placeholder="Enter party name" id="party-name" required minlength="2" />
 
         <div style={{display: 'none'}}>
-          <label for="shazbot">Enter your email address</label>
-          <input type="text" name="email-shazbot" id="email-shazbot" />
+          <label for="email">Enter your email address</label>
+          <input type="text" name="email" id="email" autocomplete="off" />
         </div>
+        <input type="hidden" name="timestamp" value={ts} />
+        <input type="hidden" name="nonce" value={formNonce} />
         <br />
         <Button
           className="button"
@@ -53,7 +87,8 @@ if (Astro.request.method === "POST") {
         >
           Create party!
         </Button>
-      </form>
+      </form>)
+      }
     </Card>
 	</div>
 </Layout>
