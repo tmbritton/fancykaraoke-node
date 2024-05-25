@@ -1,0 +1,13 @@
+---
+import { type ERROR_TYPE } from '../helpers/botProtection'
+
+interface Props {
+  error: ERROR_TYPE
+}
+
+const { error } = Astro.props;
+---
+
+<div class={`botError ${error}`}>
+  <h2>Sorry! You're triggered our bot protection. We think you're a 🤖</h2>
+</div>

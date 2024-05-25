@@ -2,8 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import Button from '../../components/Button.astro';
+import BotError from '../../components/BotError.astro';
 import { createParty } from '../../controllers/partyController';
 import NonceGenerator from '../../helpers/NonceGenerator';
+import botProtection from '../../helpers/botProtection';
 
 let error: 'HONEYPOT' | 'NONCE' | 'DATABASE' | 'TIMESTAMP' | 'NONE' = 'NONE'
 const ts = Date.now();
@@ -12,30 +14,7 @@ const formNonce = NonceGenerator.generateNonce([ts]);
 if (Astro.request.method === "POST") {
   const data = await Astro.request.formData();
 
-  const honeypot = data.get('email');
-  if (honeypot) {
-    error = 'HONEYPOT';
-  }
-
-  if (error === 'NONE') {
-    const nonce = data.get('nonce');
-    const timestamp = data.get('timestamp');
-
-    const checkNonce = NonceGenerator.generateNonce([timestamp]);
-    if (nonce !== checkNonce) {
-      error = 'NONCE';
-    }
-  }
-
-  if (error === 'NONE') {
-    const timestamp = data.get('timestamp') as unknown as number;
-
-    // Validate user has spent at least three seconds on the form.
-    if (Date.now() - timestamp < 3000)  {
-      error = 'TIMESTAMP';
-    }
-  }
-
+  error = botProtection(data);
   // Proceed if no errors are triggered
   if (error === 'NONE') {
     const partyName = data.get('party-name');
@@ -46,6 +25,8 @@ if (Astro.request.method === "POST") {
         const slugNonce = NonceGenerator.generateNonce([result.slug]);
         Astro.cookies.set('fk-host-nonce', slugNonce);
         return Astro.redirect(`/host/${result.slug}`);
+      } else {
+        error = 'DATABASE'
       }
     } catch(err) {
       if (err instanceof Error) {
@@ -64,13 +45,22 @@ if (Astro.request.method === "POST") {
 	<div class="create-party-page">
     <Card title='Create Party'>
       { error === 'HONEYPOT' || error === 'NONCE' || error === 'TIMESTAMP' ?
-        (<div class={`botError ${error}`}>
-          <h2>Sorry! You're triggered our bot protection. We think you're a 🤖</h2>
-        </div>)
+        <BotError error={error} />
       :
       (<form method="post" action="/host">
         <label for="party-name">Party Name</label>
-        <input type="text" name="party-name" placeholder="Enter party name" id="party-name" required minlength="2" />
+        <input
+          type="text"
+          name="party-name"
+          placeholder="Enter party name"
+          id="party-name"
+          required
+          minlength="2"
+          class={error === 'DATABASE' ? 'error' : ''}
+        />
+        {error === 'DATABASE' ? 
+          <label for="party-name" class="error">Some sort of database error happened. Let's try that again.</label>
+        : null}
 
         <div style={{display: 'none'}}>
           <label for="email">Enter your email address</label>
