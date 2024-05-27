@@ -13,8 +13,8 @@ const showButton = count && count > 0;
 ---
 
 <header class="site-header">
-	<h1><a href="/">Fancy Karaoke</a></h1>
-  <SkipSongButton showButton={showButton as boolean} slug={partySlug} />
+ 	<h1><a href="/"><img class="sitelogo" src="/public/icons/fk-logo.svg" alt="Fancy Karaoke"/></a></h1> 
+	<SkipSongButton showButton={showButton as boolean} slug={partySlug} />
 </header>
 
 <style>
@@ -22,8 +22,12 @@ const showButton = count && count > 0;
 		background-color: var(--primary);
 		border-bottom: 1px solid var(--magenta04);
 		color: var(----grey);
-		padding: .5rem 2rem;
+		padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
+		height: 75px;
+	}
+	.sitelogo {
+		height: 2.5rem;
 	}
 </style>
