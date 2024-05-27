@@ -43,6 +43,7 @@ const song = await getSongById(songId)
 
 <style>
  .queueItem {
+  position: relative;
   display: flex;
   flex-direction: row;
   padding: 0.5rem 1.5rem;
@@ -54,20 +55,10 @@ const song = await getSongById(songId)
     background-color: var(--grey04);
     border: 1px solid var(--grey04);
   }
-  &:hover {
-    cursor: grab;
-    border: 1px solid var(--grey01);
-  }
   .songPosition {
     margin-right: 1.5rem;
     font-size:2rem;
     min-width: 2.25rem;
-    &:hover {
-      &::after {
-        opacity: 1;
-        content: '↕';
-      }
-    }
   }
   .songInfo {
     display: flex;
@@ -91,6 +82,22 @@ const song = await getSongById(songId)
       color: var(--grey02);
     }
   }
-    .
-  
+  &.sortable {
+    &:hover {
+      cursor: grab;
+      border: 1px solid var(--grey01);
+      .songPosition {
+        &::before {
+          position:absolute;
+          left: 0;
+          content: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="%23F7F8F7"><circle cx="8" cy="5" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="8" cy="19" r="1"/><circle cx="16" cy="5" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="16" cy="19" r="1"/></g></svg>');
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          vertical-align: middle;
+          margin-right: 5px;
+        }  
+      }
+    }
+  }
 </style>
