@@ -1,4 +1,4 @@
-import { type QueueItem, selectQueueByPartySlug, insertQueueItem, getQueueLengthByPartyId, selectCurrentSongByPartySlug, hideQueueItem, selectPartySlugByQueueId, selectQueueCountByPartySlug} from "../models/queueModel";
+import { type QueueItem, selectQueueByPartySlug, insertQueueItem, getQueueLengthByPartyId, selectCurrentSongByPartySlug, hideQueueItem, selectPartySlugByQueueId, selectQueueCountByPartySlug, updateQueueItemsPriority} from "../models/queueModel";
 import { type CurrentSong } from '../models/songModel';
 import { getPartyBySlug } from "./partyController";
 import { sanitizeString } from "../helpers/string";
@@ -47,4 +47,14 @@ export const getQueueCountByPartySlug = async (slug: string) => {
   const sanitizedSlug = sanitizeString(slug); 
   const count = await selectQueueCountByPartySlug(sanitizedSlug);
   return count; 
+}
+
+export const reorderQueue = async (queueItems: {id: number, priority: number}[], partySlug: string)=> {
+  try {
+    const result = await updateQueueItemsPriority(queueItems);
+    pubSub.publish('queueUpdated', {slug: partySlug})
+    return result; 
+  } catch (e) {
+    return false
+  }
 }

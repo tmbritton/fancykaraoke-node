@@ -7,13 +7,14 @@ interface Props {
   userType: 'HOST' | 'ATTENDEE',
   queueItemId: number
   isPlaying: boolean
+  priority: number
 }
 
-const {songId, addedBy, position, userType, queueItemId, isPlaying } = Astro.props
+const {songId, addedBy, position, userType, queueItemId, isPlaying, priority } = Astro.props
 const song = await getSongById(songId)
 ---
 
-<li class={`queueItem${!isPlaying ? ' sortable' : ''}`}>
+<li class={`queueItem${isPlaying ? ' notSortable' : ' sort'} ${userType.toLowerCase()}`}>
   {isPlaying ? 
     <span class="songPosition nowPlaying" title="Now Playing!">
       &#9658;
@@ -39,10 +40,11 @@ const song = await getSongById(songId)
       &times;
     </button>
   }
+  <input type="hidden" name={`queueItem-${priority}`} value={queueItemId.toString()} />
 </li>
 
 <style>
- .queueItem {
+.queueItem {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -82,7 +84,7 @@ const song = await getSongById(songId)
       color: var(--grey02);
     }
   }
-  &.sortable {
+  &.sort.host {
     &:hover {
       cursor: grab;
       border: 1px solid var(--grey01);
@@ -100,4 +102,9 @@ const song = await getSongById(songId)
       }
     }
   }
+  &.ghost {
+    opacity: .7;
+    background-color: var(--pink);
+  }
+}
 </style>

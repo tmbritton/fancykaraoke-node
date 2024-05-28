@@ -16,11 +16,20 @@ const filteredQueue = queue.filter((song, index) => {
 })
 ---
 
+<form
+  class="sortable"
+  hx-post="/partials/reorder-queue"
+  hx-trigger="end"
+  id="sortableForm"
+>
+<input type="hidden" name="slug" value={slug} />
 <ol
   class="songQueue"
   id="songQueue"
   hx-get=`/partials/updated-queue?slug=${slug}&user-type=${userType}`
   hx-trigger="queueUpdated from:body"
+  hx-target="#sortableForm"
+  hx-swap="outerHTML"
   >
   { queue?.length ? 
     <QueueItem 
@@ -30,6 +39,7 @@ const filteredQueue = queue.filter((song, index) => {
       userType={userType}
       queueItemId={queue[0].id}
       isPlaying={true}
+      priority={queue[0].priority}
     />
     : null
   }
@@ -42,9 +52,11 @@ const filteredQueue = queue.filter((song, index) => {
       userType={userType}
       queueItemId={item.id}
       isPlaying={false}
+      priority={item.priority}
     />
   )}
 </ol>
+</form>
 
 <style>
   .songQueue {
