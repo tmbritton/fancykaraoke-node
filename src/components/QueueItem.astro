@@ -7,13 +7,14 @@ interface Props {
   userType: 'HOST' | 'ATTENDEE',
   queueItemId: number
   isPlaying: boolean
+  priority: number
 }
 
-const {songId, addedBy, position, userType, queueItemId, isPlaying } = Astro.props
+const {songId, addedBy, position, userType, queueItemId, isPlaying, priority } = Astro.props
 const song = await getSongById(songId)
 ---
 
-<li class="queueItem">
+<li class={`queueItem${isPlaying ? ' notSortable' : ' sort'} ${userType.toLowerCase()}`}>
   {isPlaying ? 
     <span class="songPosition nowPlaying" title="Now Playing!">
       &#9658;
@@ -39,18 +40,22 @@ const song = await getSongById(songId)
       &times;
     </button>
   }
+  <input type="hidden" name={`queueItem-${priority}`} value={queueItemId.toString()} />
 </li>
 
 <style>
- .queueItem {
+.queueItem {
+  position: relative;
   display: flex;
   flex-direction: row;
   padding: 0.5rem 1.5rem;
   margin: 0 -1.5rem;
   color: var(--white);
   align-items: center;
+  border: 1px solid var(--grey05);
   &:nth-child(even) {
     background-color: var(--grey04);
+    border: 1px solid var(--grey04);
   }
   .songPosition {
     margin-right: 1.5rem;
@@ -79,6 +84,27 @@ const song = await getSongById(songId)
       color: var(--grey02);
     }
   }
-    .
-  
+  &.sort.host {
+    &:hover {
+      cursor: grab;
+      border: 1px solid var(--grey01);
+      .songPosition {
+        &::before {
+          position:absolute;
+          left: 0;
+          content: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="%23F7F8F7"><circle cx="8" cy="5" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="8" cy="19" r="1"/><circle cx="16" cy="5" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="16" cy="19" r="1"/></g></svg>');
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          vertical-align: middle;
+          margin-right: 5px;
+        }  
+      }
+    }
+  }
+  &.ghost {
+    opacity: .7;
+    background-color: var(--pink);
+  }
+}
 </style>

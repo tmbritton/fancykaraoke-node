@@ -145,5 +145,34 @@ export const selectQueueCountByPartySlug = async (slug: string): Promise<number 
     console.error(e)
     return null
   }
-
 }
+
+/**
+ * Update queueItems to new priority by id.
+ * @param queueItems
+ * @returns
+ */
+export const updateQueueItemsPriority = async (queueItems: {id: number, priority: number}[]) => {
+  const updateStatements = queueItems.map((item, index) => {
+    return `WHEN id = ? THEN ?`;
+  }).join(' ');
+
+  const sql = `
+    UPDATE queue
+    SET priority = CASE ${updateStatements} END
+    WHERE id IN (${queueItems.map(() => '?').join(', ')})
+  `;
+
+  const queryArgs: (number | string)[] = queueItems.flatMap(item => [item.id, item.priority])
+    .concat(queueItems.map(item => item.id));
+
+  try {
+    const result = await client.execute({
+      sql: sql,
+      args: queryArgs
+    });
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
+};

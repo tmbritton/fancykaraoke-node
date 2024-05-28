@@ -1,0 +1,46 @@
+---
+export const partial = true;
+import SongQueue from "../../components/SongQueue.astro";
+import { sanitizeString } from "../../helpers/string";
+import { reorderQueue } from '../../controllers/queueController';
+
+const data = await Astro.request.formData();
+const slug = sanitizeString(data.get('slug') as string);
+
+if (Astro.request.method === 'POST') {
+  //let offset = 0;
+  const queueItems: any[] = [];
+
+  for(let entry of data.entries()){
+    if (entry[0].includes('queueItem')) {
+      queueItems.push(entry)
+    }
+  }
+
+  const sortedItems = [...queueItems].sort((itemA, itemB) => {
+    if (itemA[0] < itemB[0]) {
+      return -1;
+    }
+    if (itemA[0] > itemB[0]) {
+      return 1
+    }
+    return 0
+  })
+
+  const updatedQueueItems = sortedItems.reduce((acc, item, index) => {
+    if (item[1] !== queueItems[index][1]) {
+      acc.push({id: parseInt(queueItems[index][1]), priority: parseInt(item[0].split('-')[1])})
+    }
+    return acc;
+  }, [])
+  
+  try {
+    await reorderQueue(updatedQueueItems, slug)
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+---
+
+<SongQueue slug={slug} userType="HOST" />
