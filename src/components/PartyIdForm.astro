@@ -20,18 +20,21 @@ const formNonce = NonceGenerator.generateNonce([ts]);
 
 <form method={method} action={action}>
   <div class="field-wrap">
-    <label for="party-id">{fieldLabel}</label>
-    <input
-      type="text"
-      name="party-name"
-      placeholder={placeholder}
-      id="party-id"
-      required
-      minlength="2"
-      value={partyId || ''}
-      readonly={partyId ? 'readonly' : null}
-      class={`${partyIdError ? 'error' : ''}`}
-    />
+    { partyId ? 
+      <input type="hidden" name="party-name" value={partyId} />
+    :
+      <label for="party-id">{fieldLabel}</label>
+      <input
+        type="text"
+        name="party-name"
+        placeholder={placeholder}
+        id="party-id"
+        required
+        minlength="2"
+        value={partyId || ''}
+        class={`${partyIdError ? 'error' : ''}`}
+      />
+    }
     {partyIdError ? 
       <label for="party-id" class="error">There is no party with that id.</label>
     : null}
