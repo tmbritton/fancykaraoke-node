@@ -17,7 +17,7 @@ const song = await getSongById(songId)
 <li class={`queueItem${isPlaying ? ' notSortable' : ' sort'} ${userType.toLowerCase()}`}>
   {isPlaying ? 
     <span class="songPosition nowPlaying" title="Now Playing!">
-      &#9658;
+       ♪
     </span>
     :
      <span class="songPosition">{position}</span> 
