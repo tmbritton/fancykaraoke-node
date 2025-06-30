@@ -6,7 +6,7 @@ on:
 
 jobs:
   get_songs:
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-latest"
     env:
       FK_DB_URL: ${{ secrets.FK_DB_URL }}
       FK_DB_TOKEN: ${{ secrets.FK_DB_TOKEN }}
