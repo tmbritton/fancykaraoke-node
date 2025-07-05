@@ -1,9 +1,8 @@
-import { createClient } from "@libsql/client";
+import { createClient } from '@libsql/client';
 
 const client = createClient({
-  url: 'file:./karaoke.db',
-  syncUrl: process.env.FK_DB_URL,
-  authToken: process.env.FK_DB_TOKEN
+	url: process.env.FK_DB_URL,
+	authToken: process.env.FK_DB_TOKEN
 });
 
-export default client
+export default client;

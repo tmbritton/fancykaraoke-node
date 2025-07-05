@@ -26,5 +26,3 @@ jobs:
       - name: Run npm script
         run: npm run getSongs
 
-      - name: Sync Database
-        run: npm run syncDb

@@ -61,6 +61,8 @@ import '../styles/global.css'
 	window.onYouTubeIframeAPIReady = async function () {
 		// @ts-ignore
 		let player = await document.querySelector('lite-youtube')?.getYTPlayer();
+		const videoData = player.getVideoData();
+		debugger;
 		const interval = window.setInterval(async () => {
 			// Get player inside loop because otherwise after video ends it will 
 			// continue loading new videos every second.

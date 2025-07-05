@@ -11,13 +11,11 @@
     "preview": "astro preview",
     "astro": "astro",
     "getSongs": "node ./utils/scraper.js 10000",
-    "syncDb": "node ./utils/sync.js",
-    "syncLocalDb": "node ./utils/syncLocalDb.js"
   },
   "dependencies": {
     "@astrojs/check": "0.5.10",
     "@astrojs/node": "8.2.0",
-    "@libsql/client": "0.4.0-pre.5",
+    "@libsql/client": "0.15.9",
     "@types/youtube-player": "5.5.11",
     "astro": "4.3.5",
     "axios": "1.6.8",
@@ -31,7 +29,8 @@
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
     "prettier": "3.2.5",
-    "prettier-plugin-astro": "0.13.0"
+    "prettier-plugin-astro": "0.13.0",
+    "puppeteer": "^23.3.0"
   },
   "lint-staged": {
     "*.js|*.ts|*.tsx|*.astro": [

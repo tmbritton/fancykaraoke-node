@@ -10,6 +10,9 @@ const userName = sanitizeString(data.get('userName') as string);
 const song = sanitizeString(data.get('song') as string);
 
 if (Astro.request.method === "POST") {
+  console.log('slug', slug)
+  console.log('userName', userName)
+  console.log('song', song)
   try {
     const result = await addSongToQueue(
       slug, 

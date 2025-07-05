@@ -25,6 +25,7 @@ const {title, artist, songId} = Astro.props;
       hx-post="/partials/add-song-to-queue"
       hx-target="#tabContainer"
       hx-swap="outerHTML"
+      hx-include="[name='partySlug'], [name='userName']"
     />
     <span class="searchPlusIcon" title={`Add ${title} to song queue.`}>&plus;</span>
   </label>
