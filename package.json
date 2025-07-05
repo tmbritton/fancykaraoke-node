@@ -10,7 +10,7 @@
     "precommit": "lint-staged",
     "preview": "astro preview",
     "astro": "astro",
-    "getSongs": "node ./utils/scraper.js 10000",
+    "getSongs": "node ./utils/scraper.js 10000"
   },
   "dependencies": {
     "@astrojs/check": "0.5.10",
