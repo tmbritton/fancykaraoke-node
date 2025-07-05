@@ -41,4 +41,4 @@ COPY --from=build /app /app
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 4321
 ENV HOST="0.0.0.0"
-CMD ["sh", "-c", "npm run syncLocalDb && npm run start"]
+CMD ["sh", "-c", "npm run start"]
